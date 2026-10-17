@@ -162,6 +162,13 @@ header.sticky .hd{transition:padding .3s}header.sticky.sc .hd{padding:6px 20px}h
 #toast{right:auto;left:50%;transform:translateX(-50%);border-radius:30px;bottom:80px}
 @media(max-width:900px){.steps{grid-template-columns:1fr 1fr}.chip.a{left:0}.chip.b{right:0}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}html{scroll-behavior:auto}}
+.ac{opacity:1;transform:none}
+.ac button[title="Quick view"]{opacity:0;transform:translateX(8px);transition:.2s}.p2:hover .ac button[title="Quick view"]{opacity:1;transform:none}
+.ac button[title="Save to wishlist"]{font-size:17px;line-height:1;transition:transform .2s,background .2s}.ac button[title="Save to wishlist"]:hover{transform:scale(1.15)}
+.ac button[title="Save to wishlist"].on{background:var(--sale);color:#fff!important}
+@keyframes hb{30%{transform:scale(1.4)}60%{transform:scale(.9)}}.ac button.hb{animation:hb .45s}
+.ic a[title="Wishlist"]{display:inline-flex;gap:4px;align-items:center}
+@media(hover:none){.ac button[title="Quick view"]{display:none}}
 </style></head><body>
 <div id="app"></div><div id="toast"></div>
 <script>
@@ -338,6 +345,22 @@ const AN=["FREE SHIPPING ABOVE ₹1000 ORDERS","5% DISCOUNT ON BULK ORDERS","SEC
 setInterval(()=>{const t=q(".top");if(!t)return;ai=(ai+1)%AN.length;t.innerHTML=`<span class="ms">${AN[ai]}</span>`},3500);
 document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest('.ac button[title="Wishlist"]');if(b){b.textContent=b.textContent=="♡"?"♥":"♡";b.style.color=b.textContent=="♥"?"var(--sale)":""}});
 let tk=0;addEventListener("scroll",()=>{if(tk)return;tk=requestAnimationFrame(()=>{tk=0;const y=scrollY,h=document.documentElement.scrollHeight-innerHeight;q("#pb").style.width=(h>0?y/h*100:0)+"%";const hd=q("header.sticky");if(hd)hd.classList.toggle("sc",y>60);q("#bt").classList.toggle("on",y>700);const c=q(".col2");if(c&&!RM)c.style.transform=`translateY(${Math.min(y,800)*-.05}px)`})},{passive:true});
+
+/* ===== Wishlist ===== */
+let WL=new Set();try{WL=new Set(JSON.parse(localStorage.getItem("dk_wl")||"[]").filter(i=>{try{return find(i)}catch(e){return 0}}))}catch(e){}
+const svw=()=>{try{localStorage.setItem("dk_wl",JSON.stringify([...WL]))}catch(e){}};
+const hdr1=hdr;hdr=()=>hdr1().replace("<span>♡</span>",`<a href="#/wishlist" title="Wishlist">♡ <b id="wc">${WL.size}</b></a>`);
+const card1=card;card=p=>card1(p).replace(`<button title="Wishlist" onclick="toast('Added to wishlist ♥')">♡</button>`,`<button title="Save to wishlist" style="${WL.has(p.id)?"color:var(--sale)":""}" onclick="wl('${p.id}',this)">${WL.has(p.id)?"♥":"♡"}</button>`);
+function wl(id,b){const on=!WL.has(id);on?WL.add(id):WL.delete(id);svw();const c=$("#wc");if(c)c.textContent=WL.size;if(b){b.textContent=on?"♥":"♡";b.style.color=on?"var(--sale)":""}toast(on?"Added to wishlist ♥":"Removed from wishlist");if((location.hash||"").startsWith("#/wishlist"))route()}
+const prod1=prod;prod=id=>prod1(id).replace(`<a class="btn" onclick="toast('Added to wishlist ♥')">♡ Wishlist</a>`,`<a class="btn" onclick="wl('${id}');this.textContent=WL.has('${id}')?'♥ In wishlist':'♡ Wishlist'">${WL.has(id)?"♥ In wishlist":"♡ Wishlist"}</a>`);
+function wlp(){const it=[...WL].map(find);return`<div class="pgh"><div class="w">${crumb([["Wishlist"]])}<h1>My Wishlist (${it.length})</h1></div></div><div class="w">${it.length?`<div class="g4">${it.map(card).join("")}</div><p style="text-align:center;margin-top:26px"><a class="btn fill" onclick="it_all()">Add all to cart</a> &nbsp;<a class="btn" href="#/shop">Continue shopping</a></p>`:`<div class="bx2" style="text-align:center;padding:60px"><div style="font-size:44px">♡</div><h3>Your wishlist is empty</h3><p style="color:var(--mute)">Tap the heart on any product to save it here.</p><a class="btn fill" href="#/shop">Browse products</a></div>`}</div>`}
+function it_all(){[...WL].filter(i=>typeof find(i).n=="number").forEach(i=>{cart[i]=(cart[i]||0)+1});$("#cc").textContent=cnt();opn()}
+const route2=route;route=function(){if((location.hash||"").startsWith("#/wishlist")){$("#app").innerHTML=hdr()+wlp()+ftr();scrollTo(0,0);after()}else route2()};
+
+/* wishlist: always-visible heart + quick-view heart */
+const wl1=wl;wl=function(id,b){wl1(id,b);if(b){const on=WL.has(id);b.classList.toggle("on",on);b.classList.remove("hb");void b.offsetWidth;b.classList.add("hb");if(on)b.style.color=""}};
+const card2=card;card=p=>card2(p).replace(`title="Save to wishlist" style="${WL.has(p.id)?"color:var(--sale)":""}"`,`title="Save to wishlist" aria-label="Save to wishlist" class="${WL.has(p.id)?"on":""}" style=""`);
+const qv1=qv;qv=function(id){qv1(id);const d=$("#qc").lastElementChild;if(d)d.insertAdjacentHTML("beforeend",` <a class="btn" onclick="wl('${id}');this.textContent=WL.has('${id}')?'♥ In wishlist':'♡ Wishlist'">${WL.has(id)?"♥ In wishlist":"♡ Wishlist"}</a>`)};
 
 addEventListener("hashchange",route);route();
 </script></body></html>
