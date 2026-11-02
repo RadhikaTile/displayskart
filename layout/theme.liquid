@@ -1,0 +1,62 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_accent }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+  {%- if settings.favicon != blank -%}<link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">{%- endif -%}
+  <title>{{ page_title }}{% if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif %}{% if current_page != 1 %} &ndash; Page {{ current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}</title>
+  {%- if page_description -%}<meta name="description" content="{{ page_description | escape }}">{%- endif -%}
+  <meta property="og:site_name" content="{{ shop.name }}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:title" content="{{ page_title | escape }}">
+  <meta property="og:type" content="{% if template.name == 'product' %}product{% else %}website{% endif %}">
+  {%- if page_description -%}<meta property="og:description" content="{{ page_description | escape }}">{%- endif -%}
+  {%- if page_image -%}<meta property="og:image" content="{{ page_image | image_url: width: 1200 }}">{%- endif -%}
+  <meta name="twitter:card" content="summary_large_image">
+  <style>
+    {%- if settings.heading_font -%}{{ settings.heading_font | font_face: font_display: 'swap' }}{%- endif -%}
+    {%- if settings.body_font -%}{{ settings.body_font | font_face: font_display: 'swap' }}{%- endif -%}
+    :root{
+      --bg: {{ settings.color_bg | default: '#fbf6ee' }};
+      --card: {{ settings.color_card | default: '#ffffff' }};
+      --ink: {{ settings.color_ink | default: '#2b211a' }};
+      --mute: {{ settings.color_mute | default: '#7d6e62' }};
+      --line: {{ settings.color_line | default: '#eadfce' }};
+      --ph: {{ settings.color_ph | default: '#e9dccb' }};
+      --cream: {{ settings.color_cream | default: '#f3e9db' }};
+      --acc: {{ settings.color_accent | default: '#8c4a2f' }};
+      --sale: {{ settings.color_sale | default: '#c0432b' }};
+      --font-body: {% if settings.body_font %}{{ settings.body_font.family }}, {{ settings.body_font.fallback_families }}{% else %}'Inter', system-ui, -apple-system, sans-serif{% endif %};
+      --font-head: {% if settings.heading_font %}{{ settings.heading_font.family }}, {{ settings.heading_font.fallback_families }}{% else %}'Playfair Display', Georgia, serif{% endif %};
+      --maxw: {{ settings.page_width | default: 1200 }}px;
+    }
+    body{background:var(--bg);color:var(--ink);font-family:var(--font-body)}
+  </style>
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+  <script>
+    window.theme={root:{{ routes.root_url | json }},suggest:{{ routes.predictive_search_url | json }},search:{{ routes.search_url | json }},currency:{{ cart.currency.iso_code | json }},locale:{{ request.locale.iso_code | json }},drawer:{{ settings.enable_cart_drawer | json }},wishlist:{{ settings.enable_wishlist | json }},threshold:{{ settings.free_shipping_threshold | default: 0 | times: 100 }}};
+    document.documentElement.className=document.documentElement.className.replace('no-js','js');
+  </script>
+  <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+  {{ content_for_header }}
+</head>
+<body class="template-{{ template.name | handle }}">
+  <a class="skip" href="#MainContent">{{ 'general.skip' | t }}</a>
+  {% sections 'header-group' %}
+  <main id="MainContent" role="main">{{ content_for_layout }}</main>
+  {% sections 'footer-group' %}
+
+  <div id="ov" data-close></div>
+  {% section 'cart-drawer' %}
+  <div id="qm"><div class="qc" id="qc"></div></div>
+  <div id="pb"></div>
+  {%- if settings.show_whatsapp and settings.whatsapp_number != blank -%}
+    <a id="wa" href="https://wa.me/{{ settings.whatsapp_number | strip }}" target="_blank" rel="noopener" title="Chat on WhatsApp" aria-label="Chat on WhatsApp">💬</a>
+  {%- endif -%}
+  <button id="bt" type="button" title="Back to top" aria-label="Back to top">↑</button>
+  <div id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

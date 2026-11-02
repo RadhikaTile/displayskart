@@ -1,0 +1,72 @@
+{%- comment -%} Product card. Param: product {%- endcomment -%}
+{%- liquid
+  assign pv = product.selected_or_first_available_variant
+  assign pct = 0
+  if product.compare_at_price > product.price and product.available
+    assign diff = product.compare_at_price | minus: product.price
+    assign pct = diff | times: 100 | divided_by: product.compare_at_price
+  endif
+  assign low = false
+  if pv.inventory_management and pv.inventory_quantity > 0 and pv.inventory_quantity <= 10
+    assign low = true
+  endif
+-%}
+<div class="p2">
+  <div class="pi">
+    <a href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+      {% render 'img', image: product.featured_image, ratio: '1/1', sizes: '(min-width:900px) 280px, 50vw', placeholder: 'product-1' %}
+      {%- if product.images[1] -%}<span class="h2">{% render 'img', image: product.images[1], ratio: '1/1', sizes: '(min-width:900px) 280px, 50vw' %}</span>{%- endif -%}
+    </a>
+    {%- if pct > 0 -%}<span class="badge">-{{ pct }}%</span>{%- elsif product.available == false -%}<span class="badge" style="background:var(--mute)">Sold out</span>{%- endif -%}
+    <div class="ac">
+      {%- if settings.enable_wishlist -%}<button type="button" title="Save to wishlist" aria-label="Save to wishlist" data-wl="{{ product.handle }}">♡</button>{%- endif -%}
+      <button type="button" title="Quick view" aria-label="Quick view" data-qv="{{ product.handle }}">👁</button>
+    </div>
+    {%- if product.available and product.variants.size == 1 -%}
+      <button type="button" class="qb" data-add="{{ pv.id }}">Quick Buy +</button>
+    {%- else -%}
+      <a class="qb" href="{{ product.url }}">{% if product.available %}Select options{% else %}View product{% endif %}</a>
+    {%- endif -%}
+  </div>
+  <div class="pb">
+    {%- assign cat_label = "" -%}
+    {%- for col in product.collections -%}
+      {%- unless col.handle == 'frontpage' or col.handle == 'all' -%}
+        {%- assign cat_label = col.title -%}
+        {%- break -%}
+      {%- endunless -%}
+    {%- endfor -%}
+    {%- if cat_label == blank and product.type != blank and product.type != 'Default' and product.type != 'TYPE 5' and product.type != 'type-5' -%}
+      {%- assign cat_label = product.type -%}
+    {%- endif -%}
+    {%- if cat_label == blank -%}
+      {%- assign pt_low = product.title | downcase -%}
+      {%- if pt_low contains 'sign' or pt_low contains 'holder' or pt_low contains 'stand' -%}
+        {%- assign cat_label = "Acrylic Sign Holders" -%}
+      {%- elsif pt_low contains 'photo' or pt_low contains 'frame' -%}
+        {%- assign cat_label = "Acrylic Photo Frames" -%}
+      {%- elsif pt_low contains 'donation' or pt_low contains 'suggestion' or pt_low contains 'box' or pt_low contains 'ballot' -%}
+        {%- assign cat_label = "Acrylic Donation Box" -%}
+      {%- elsif pt_low contains 'sheet' or pt_low contains 'color' -%}
+        {%- assign cat_label = "Acrylic Sheets" -%}
+      {%- elsif pt_low contains 'hotel' or pt_low contains 'organizer' or pt_low contains 'tray' -%}
+        {%- assign cat_label = "Hotel Supplies & Organizer" -%}
+      {%- elsif pt_low contains 'wall' or pt_low contains 'mount' -%}
+        {%- assign cat_label = "Wall Mount Display" -%}
+      {%- elsif pt_low contains 'retail' or pt_low contains 'shop' or pt_low contains 'basket' or pt_low contains 'cloth' or pt_low contains 'needle' -%}
+        {%- assign cat_label = "Retail Displays" -%}
+      {%- else -%}
+        {%- assign cat_label = "Acrylic Display" -%}
+      {%- endif -%}
+    {%- endif -%}
+    <span class="cl">{{ cat_label }}</span>
+    <h3><a href="{{ product.url }}">{{ product.title }}</a></h3>
+    {%- if pv.sku != blank -%}<div class="sku">SKU: {{ pv.sku }}</div>{%- endif -%}
+    <div class="pr" style="margin:4px 0 0">
+      {%- if product.price_varies -%}From {% endif -%}
+      {%- if product.compare_at_price > product.price -%}<s>{{ product.compare_at_price | money }}</s>{%- endif -%}
+      {{ product.price | money }}
+    </div>
+    {%- if low -%}<div class="stk"><i style="width:{{ pv.inventory_quantity | times: 8 }}%"></i></div><small>Hurry! Only {{ pv.inventory_quantity }} left</small>{%- endif -%}
+  </div>
+</div>

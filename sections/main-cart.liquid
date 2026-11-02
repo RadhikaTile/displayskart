@@ -1,0 +1,45 @@
+{%- assign threshold = settings.free_shipping_threshold | times: 100 -%}
+<div class="pgh"><div class="w"><div class="crumb"><a href="{{ routes.root_url }}">Home</a> / Cart</div><h1>Shopping Cart</h1></div></div>
+<div class="w">
+{%- if cart.item_count > 0 -%}
+  <form action="{{ routes.cart_url }}" method="post" id="CartForm">
+    <div class="shop cartgrid">
+      <div>
+        <table>
+          <thead><tr><th>Product</th><th>Price</th><th>Qty</th><th>Total</th><th></th></tr></thead>
+          <tbody>
+          {%- for item in cart.items -%}
+            <tr>
+              <td><div style="display:flex;gap:12px;align-items:center"><div style="width:70px;flex:none">{% render 'img', image: item.image, ratio: '1/1', sizes: '70px' %}</div>
+                <div><a href="{{ item.url }}">{{ item.product.title }}</a>{% unless item.product.has_only_default_variant %}<div class="sku">{{ item.variant.title }}</div>{% endunless %}</div></div></td>
+              <td>{{ item.final_price | money }}</td>
+              <td><div class="q"><button type="button" data-qty="-1">−</button><input type="number" name="updates[]" value="{{ item.quantity }}" min="0" aria-label="Quantity"><button type="button" data-qty="1">+</button></div></td>
+              <td>{{ item.final_line_price | money }}</td>
+              <td><a href="{{ item.url_to_remove }}" aria-label="Remove">✕</a></td>
+            </tr>
+          {%- endfor -%}
+          </tbody>
+        </table>
+        <p><a class="btn" href="{{ routes.all_products_collection_url }}">← Continue shopping</a> <button class="btn" type="submit" name="update">Update cart</button></p>
+      </div>
+      <div class="bx2">
+        <h3 style="margin-top:0">Order Summary</h3>
+        <p>Subtotal: <b>{{ cart.total_price | money }}</b></p>
+        <p>Shipping: <b>{% if threshold > 0 and cart.total_price >= threshold %}Free{% else %}Calculated at checkout{% endif %}</b></p>
+        <p style="font-size:13px;color:var(--mute)">5% discount on bulk orders — contact us. Taxes calculated at checkout.</p>
+        <textarea name="note" rows="2" placeholder="Order note (optional)" style="margin-bottom:10px">{{ cart.note }}</textarea>
+        <button class="btn fill" style="width:100%" type="submit" name="checkout">Proceed to Checkout</button>
+      </div>
+    </div>
+  </form>
+{%- else -%}
+  <div class="bx2" style="text-align:center;padding:60px"><p>Your cart is currently empty.</p><a class="btn fill" href="{{ routes.all_products_collection_url }}">Return to shop</a></div>
+{%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Cart page",
+  "settings": []
+}
+{% endschema %}

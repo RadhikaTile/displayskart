@@ -1,0 +1,61 @@
+{
+  "sections": {
+    "a0": {
+      "type": "image-with-text",
+      "settings": {
+        "layout": "left",
+        "heading": "Office Suppliers & Organizer",
+        "text": "<p>Name plates, label holders, brochure organizers and desk organizers for professional workspaces.</p>",
+        "button_label": "Shop now",
+        "button_link": "/collections/acrylic-label-holders-signs"
+      }
+    },
+    "a1": {
+      "type": "image-with-text",
+      "settings": {
+        "layout": "right",
+        "heading": "NGO’s & Government Organizations",
+        "text": "<p>Transparent donation, suggestion and ballot boxes with lock and key.</p>",
+        "button_label": "Shop now",
+        "button_link": "/collections/suggestion-donation-box"
+      }
+    },
+    "a2": {
+      "type": "image-with-text",
+      "settings": {
+        "layout": "left",
+        "heading": "Galleries and Museums",
+        "text": "<p>Wall-mount stud frames, shadow boxes and display risers that keep the focus on the exhibit.</p>",
+        "button_label": "Shop now",
+        "button_link": "/collections/wall-mount-display-frames"
+      }
+    },
+    "a3": {
+      "type": "image-with-text",
+      "settings": {
+        "layout": "right",
+        "heading": "Retail Displays for shops",
+        "text": "<p>Riser stands, purse stands, easels and sign holders to lift sales.</p>",
+        "button_label": "Shop now",
+        "button_link": "/collections/exclusive-products"
+      }
+    },
+    "a4": {
+      "type": "image-with-text",
+      "settings": {
+        "layout": "left",
+        "heading": "Home Interior Photo Frames",
+        "text": "<p>Magnetic and floating acrylic photo frames for homes and gifting.</p>",
+        "button_label": "Shop now",
+        "button_link": "/collections/acrylic-photo-frames"
+      }
+    }
+  },
+  "order": [
+    "a0",
+    "a1",
+    "a2",
+    "a3",
+    "a4"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "current": {
+    "color_bg": "#fbf6ee",
+    "color_card": "#ffffff",
+    "color_ink": "#2b211a",
+    "color_mute": "#7d6e62",
+    "color_line": "#eadfce",
+    "color_ph": "#e9dccb",
+    "color_cream": "#f3e9db",
+    "color_accent": "#8c4a2f",
+    "color_sale": "#c0432b",
+    "page_width": 1200,
+    "enable_cart_drawer": true,
+    "enable_wishlist": true,
+    "free_shipping_threshold": 1000,
+    "show_whatsapp": true,
+    "whatsapp_number": "917900054449",
+    "social_facebook": "https://facebook.com",
+    "social_twitter": "https://twitter.com",
+    "social_youtube": "https://youtube.com",
+    "social_linkedin": "https://linkedin.com",
+    "social_instagram": "https://instagram.com"
+  }
+}

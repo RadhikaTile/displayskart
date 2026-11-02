@@ -1,0 +1,31 @@
+{%- paginate blog.articles by section.settings.per_page -%}
+<div class="pgh"><div class="w"><div class="crumb"><a href="{{ routes.root_url }}">Home</a> / {{ blog.title }}</div><h1>{{ blog.title }}</h1><p class="muted" style="margin:6px 0 0">Guides, ideas and news about acrylic displays.</p></div></div>
+<div class="w"><div class="shop" style="grid-template-columns:1fr 280px">
+  <div class="g3 js-grid" style="grid-template-columns:1fr 1fr">
+    {%- for article in blog.articles -%}{% render 'article-card', article: article %}{%- else -%}<p class="muted">No articles yet.</p>{%- endfor -%}
+  </div>
+  <aside class="side">
+    {%- if blog.all_tags.size > 0 -%}<div class="bx"><h4>Categories</h4>{%- for tag in blog.all_tags -%}<a href="{{ blog.url }}/tagged/{{ tag | handleize }}">{{ tag }}</a>{%- endfor -%}</div>{%- endif -%}
+    <div class="bx"><h4>Recent Posts</h4>{%- for article in blog.articles limit: 4 -%}<a href="{{ article.url }}">{{ article.title }}</a>{%- endfor -%}</div>
+  </aside>
+</div>
+{%- if paginate.pages > 1 -%}<nav class="pag" aria-label="Pagination">{{ paginate | default_pagination }}</nav>{%- endif -%}
+</div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Blog page",
+  "settings": [
+    {
+      "type": "range",
+      "id": "per_page",
+      "label": "Posts per page",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "default": 8
+    }
+  ]
+}
+{% endschema %}

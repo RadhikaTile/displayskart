@@ -1,0 +1,94 @@
+{
+  "sections": {
+    "intro": {
+      "type": "image-with-text",
+      "settings": {
+        "layout": "right",
+        "eyebrow": "About us",
+        "heading": "About DisplaysKart",
+        "text": "<p>DisplaysKart is India’s trusted acrylic display store, serving retailers, hotels, offices, NGOs and exhibitions with premium acrylic sign holders, photo frames, donation boxes and risers.</p><p>We are dedicated to revolutionizing your display experience with quality, innovative solutions tailored to your unique needs.</p>",
+        "button_label": "Talk to us",
+        "button_link": "/pages/contact"
+      }
+    },
+    "why": {
+      "type": "feature-columns",
+      "settings": {
+        "eyebrow": "Why choose us",
+        "heading": "Quality you can see"
+      },
+      "blocks": {
+        "b1": {
+          "type": "column",
+          "settings": {
+            "title": "Premium Quality",
+            "text": "Clear, durable acrylic"
+          }
+        },
+        "b2": {
+          "type": "column",
+          "settings": {
+            "title": "Custom Sizes",
+            "text": "Made to your spec"
+          }
+        },
+        "b3": {
+          "type": "column",
+          "settings": {
+            "title": "Fast Shipping",
+            "text": "Free above ₹1000"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ]
+    },
+    "steps": {
+      "type": "steps",
+      "blocks": {
+        "b1": {
+          "type": "step",
+          "settings": {
+            "title": "Choose",
+            "text": "Browse our collections."
+          }
+        },
+        "b2": {
+          "type": "step",
+          "settings": {
+            "title": "Customise",
+            "text": "Request sizes or branding."
+          }
+        },
+        "b3": {
+          "type": "step",
+          "settings": {
+            "title": "Pay",
+            "text": "Secure checkout."
+          }
+        },
+        "b4": {
+          "type": "step",
+          "settings": {
+            "title": "Delivered",
+            "text": "Pan-India shipping."
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ]
+    }
+  },
+  "order": [
+    "intro",
+    "why",
+    "steps"
+  ]
+}

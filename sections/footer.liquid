@@ -1,0 +1,131 @@
+<footer>
+  <div class="w">
+    <div class="f">
+      <div>
+        <a class="logo" href="{{ routes.root_url }}">{{ section.settings.logo_text }}<b>{{ section.settings.logo_accent }}</b></a>
+        <p>{{ section.settings.about }}</p>
+        {%- if settings.social_facebook != blank or settings.social_twitter != blank or settings.social_youtube != blank or settings.social_linkedin != blank or settings.social_instagram != blank -%}
+        <p>
+          {%- if settings.social_facebook != blank %}<a href="{{ settings.social_facebook }}" target="_blank" rel="noopener">Facebook</a> · {% endif -%}
+          {%- if settings.social_twitter != blank %}<a href="{{ settings.social_twitter }}" target="_blank" rel="noopener">Twitter</a> · {% endif -%}
+          {%- if settings.social_youtube != blank %}<a href="{{ settings.social_youtube }}" target="_blank" rel="noopener">YouTube</a> · {% endif -%}
+          {%- if settings.social_linkedin != blank %}<a href="{{ settings.social_linkedin }}" target="_blank" rel="noopener">LinkedIn</a>{% endif -%}
+          {%- if settings.social_instagram != blank %} · <a href="{{ settings.social_instagram }}" target="_blank" rel="noopener">Instagram</a>{% endif -%}
+        </p>
+        {%- endif -%}
+      </div>
+      <div><h4>{{ section.settings.menu_1_title }}</h4><ul>{% for link in linklists[section.settings.menu_1].links %}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{% endfor %}</ul></div>
+      <div>
+        <h4>{{ section.settings.menu_2_title | default: 'Our Products' }}</h4>
+        <ul>
+          {%- if section.settings.menu_2 != blank and linklists[section.settings.menu_2].links.size > 2 -%}
+            {% for link in linklists[section.settings.menu_2].links %}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{% endfor %}
+          {%- else -%}
+            <li><a href="{{ routes.collections_url }}/acrylic-sign-holders">Acrylic Sign Holders</a></li>
+            <li><a href="{{ routes.collections_url }}/acrylic-photo-frames">Acrylic Photo Frames</a></li>
+            <li><a href="{{ routes.collections_url }}/hotel-supplies-organizer">Hotel Supplies & Organizer</a></li>
+            <li><a href="{{ routes.collections_url }}/acrylic-donation-box">Acrylic Donation Box</a></li>
+            <li><a href="{{ routes.collections_url }}/acrylic-wall-mount-display-frames">Wall Mount Display Frames</a></li>
+            <li><a href="{{ routes.collections_url }}/acrylic-sheets-accessories">Acrylic Sheets & Accessories</a></li>
+            <li><a href="{{ routes.collections_url }}/retail-displays-for-shops">Retail Displays for Shops</a></li>
+            <li><a href="{{ routes.all_products_collection_url }}">All Products & Categories →</a></li>
+          {%- endif -%}
+        </ul>
+      </div>
+      <div>
+        <h4>Contact Us</h4>
+        <ul>
+          {%- if section.settings.business_name != blank -%}<li>{{ section.settings.business_name }}</li>{%- endif -%}
+          {%- if section.settings.address != blank -%}<li>{{ section.settings.address }}</li>{%- endif -%}
+          {%- if section.settings.email_1 != blank -%}<li><a href="mailto:{{ section.settings.email_1 }}">{{ section.settings.email_1 }}</a></li>{%- endif -%}
+          {%- if section.settings.email_2 != blank -%}<li><a href="mailto:{{ section.settings.email_2 }}">{{ section.settings.email_2 }}</a></li>{%- endif -%}
+          {%- if section.settings.phone != blank -%}<li><a href="tel:{{ section.settings.phone | remove: ' ' }}">{{ section.settings.phone }}</a></li>{%- endif -%}
+        </ul>
+      </div>
+    </div>
+    <div class="copy">© {{ 'now' | date: '%Y' }} {{ shop.name }}
+      {%- if shop.enabled_payment_types.size > 0 -%}
+        <div style="margin-top:8px">{% for type in shop.enabled_payment_types %}{{ type | payment_type_svg_tag: class: 'icon' }} {% endfor %}</div>
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo text",
+      "default": "Displays"
+    },
+    {
+      "type": "text",
+      "id": "logo_accent",
+      "label": "Logo accent",
+      "default": "Kart"
+    },
+    {
+      "type": "textarea",
+      "id": "about",
+      "label": "About text",
+      "default": "At Display Kart, we’re dedicated to revolutionizing your display experience with quality, innovative solutions tailored to your unique needs."
+    },
+    {
+      "type": "text",
+      "id": "menu_1_title",
+      "label": "Column 2 title",
+      "default": "Quick Links"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_1",
+      "label": "Column 2 menu",
+      "default": "footer"
+    },
+    {
+      "type": "text",
+      "id": "menu_2_title",
+      "label": "Column 3 title",
+      "default": "Our Products"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_2",
+      "label": "Column 3 menu"
+    },
+    {
+      "type": "text",
+      "id": "business_name",
+      "label": "Business name",
+      "default": "Displayskart"
+    },
+    {
+      "type": "textarea",
+      "id": "address",
+      "label": "Address",
+      "default": "Behind Bajaj Show room, 6th Main Road HVR Layout, Kamakshi Palya – 560079, Bangaluru"
+    },
+    {
+      "type": "text",
+      "id": "email_1",
+      "label": "Email 1",
+      "default": "sales@displayskart.com"
+    },
+    {
+      "type": "text",
+      "id": "email_2",
+      "label": "Email 2",
+      "default": "support@displayskart.com"
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone",
+      "default": "+91 79000 54449"
+    }
+  ]
+}
+{% endschema %}

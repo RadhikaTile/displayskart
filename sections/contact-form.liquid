@@ -1,0 +1,78 @@
+<div class="pgh"><div class="w"><div class="crumb"><a href="{{ routes.root_url }}">Home</a> / {{ page.title | default: 'Contact Us' }}</div><h1>{{ page.title | default: 'Contact Us' }}</h1></div></div>
+<div class="w"><div class="g2" style="align-items:start;margin-bottom:30px">
+  <div class="bx2">
+    <h3 style="margin-top:0">Send us a message</h3>
+    {%- form 'contact', id: 'ContactForm' -%}
+      {%- if form.posted_successfully? -%}<p>Thanks for contacting us. We’ll get back to you soon.</p>{%- endif -%}
+      {%- if form.errors -%}<p class="err">{{ form.errors | default_errors }}</p>{%- endif -%}
+      <input type="text" name="contact[name]" placeholder="Your name" value="{{ form.name }}" style="margin-bottom:10px" required>
+      <input type="email" name="contact[email]" placeholder="Email" value="{{ form.email }}" style="margin-bottom:10px" required>
+      <input type="tel" name="contact[phone]" placeholder="Phone" value="{{ form.phone }}" style="margin-bottom:10px">
+      <select name="contact[Enquiry type]" aria-label="Enquiry type" style="width:100%;margin-bottom:10px"><option>General enquiry</option><option>Bulk / wholesale quote</option><option>Custom size / branding</option><option>Order support</option></select>
+      <textarea name="contact[body]" rows="5" placeholder="Message (mention product, size, quantity for bulk quotes)" required>{{ form.body }}</textarea><br><br>
+      <button class="btn fill" type="submit">Send Message</button>
+    {%- endform -%}
+  </div>
+  <div>
+    <div class="bx2" style="margin-bottom:16px">
+      <p style="margin-top:0"><b>{{ section.settings.business }}</b><br>{{ section.settings.address }}</p>
+      <p>{% if section.settings.phone != blank %}📞 {{ section.settings.phone }}<br>{% endif %}{% if section.settings.email_1 != blank %}✉ {{ section.settings.email_1 }}<br>{% endif %}{% if section.settings.email_2 != blank %}✉ {{ section.settings.email_2 }}{% endif %}</p>
+      {%- if section.settings.hours != blank -%}<p style="margin-bottom:0">Hours: {{ section.settings.hours }}</p>{%- endif -%}
+    </div>
+    {% render 'img', image: section.settings.image, ratio: '600/300', placeholder: 'lifestyle-2', sizes: '(min-width:900px) 560px, 100vw' %}
+    {%- if section.settings.map_url != blank -%}<p><a class="btn" href="{{ section.settings.map_url }}" target="_blank" rel="noopener">View on Google Maps</a></p>{%- endif -%}
+  </div>
+</div></div>
+
+{% schema %}
+{
+  "name": "Contact form",
+  "settings": [
+    {
+      "type": "text",
+      "id": "business",
+      "label": "Business name",
+      "default": "Displayskart"
+    },
+    {
+      "type": "textarea",
+      "id": "address",
+      "label": "Address",
+      "default": "Behind Bajaj Show room, 6th Main Road HVR Layout, Kamakshi Palya – 560079, Bangaluru"
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone",
+      "default": "+91 79000 54449"
+    },
+    {
+      "type": "text",
+      "id": "email_1",
+      "label": "Email 1",
+      "default": "sales@displayskart.com"
+    },
+    {
+      "type": "text",
+      "id": "email_2",
+      "label": "Email 2",
+      "default": "support@displayskart.com"
+    },
+    {
+      "type": "text",
+      "id": "hours",
+      "label": "Business hours"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image / map screenshot"
+    },
+    {
+      "type": "url",
+      "id": "map_url",
+      "label": "Google Maps link"
+    }
+  ]
+}
+{% endschema %}

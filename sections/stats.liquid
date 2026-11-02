@@ -1,0 +1,68 @@
+<section class="stats"><div class="w g4">
+  {%- if section.blocks.size > 0 -%}
+    {%- for block in section.blocks -%}
+      <div class="stat2" {{ block.shopify_attributes }}><b class="cnt" data-to="{{ block.settings.number }}" data-pre="{{ block.settings.prefix }}" data-sfx="{{ block.settings.suffix }}">{{ block.settings.prefix }}{{ block.settings.number }}{{ block.settings.suffix }}</b><span>{{ block.settings.label }}</span></div>
+    {%- endfor -%}
+  {%- else -%}
+    <div class="stat2"><b class="cnt" data-to="59" data-sfx="+">59+</b><span>Products listed</span></div>
+    <div class="stat2"><b class="cnt" data-to="8">8</b><span>Collections</span></div>
+    <div class="stat2"><b class="cnt" data-to="5" data-sfx="%">5%</b><span>Bulk-order discount</span></div>
+    <div class="stat2"><b class="cnt" data-to="1000" data-pre="₹">₹1000</b><span>Free shipping above</span></div>
+  {%- endif -%}
+</div></section>
+
+{% schema %}
+{
+  "name": "Stats counter",
+  "max_blocks": 4,
+  "settings": [],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        {
+          "type": "number",
+          "id": "number",
+          "label": "Number",
+          "default": 100
+        },
+        {
+          "type": "text",
+          "id": "prefix",
+          "label": "Prefix"
+        },
+        {
+          "type": "text",
+          "id": "suffix",
+          "label": "Suffix"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Stats counter",
+      "blocks": [
+        {
+          "type": "stat"
+        },
+        {
+          "type": "stat"
+        },
+        {
+          "type": "stat"
+        },
+        {
+          "type": "stat"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

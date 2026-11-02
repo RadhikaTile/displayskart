@@ -1,0 +1,89 @@
+<section><div class="w g2" style="align-items:start">
+  <div>
+    {%- if section.settings.eyebrow != blank -%}<small class="cl">{{ section.settings.eyebrow }}</small>{%- endif -%}
+    <h2 style="font-size:32px;margin:6px 0 12px">{{ section.settings.heading }}</h2>
+    <p class="muted">{{ section.settings.text }}</p>
+    {%- if section.settings.button_label != blank -%}<a class="btn fill" href="{{ section.settings.button_link | default: routes.root_url }}">{{ section.settings.button_label }}</a>{%- endif -%}
+  </div>
+  <div>
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}<details {{ block.shopify_attributes }}{% if forloop.first %} open{% endif %}><summary>{{ block.settings.question }}</summary><div class="muted">{{ block.settings.answer }}</div></details>{%- endfor -%}
+    {%- else -%}
+      <details open><summary>What is an acrylic display stand?</summary><div class="muted"><p>A clear, lightweight holder made from acrylic (plexiglass) used to display signs, menus, photos, brochures or products.</p></div></details>
+      <details><summary>Can I buy acrylic display stands online in India?</summary><div class="muted"><p>Yes. Pan-India delivery on tabletop, riser, wall-mount and floor-standing units.</p></div></details>
+      <details><summary>Do you offer sign holders for restaurants and hotels?</summary><div class="muted"><p>Yes — menu holders in A4, A5 and custom sizes.</p></div></details>
+      <details><summary>Single-sided vs double-sided sign holder?</summary><div class="muted"><p>Single-sided shows content on one face; double-sided shows it on both, ideal for high-traffic areas.</p></div></details>
+      <details><summary>Do you offer a donation box with a lock?</summary><div class="muted"><p>Yes — 5x5x6", 8x8x8" and 12x12x12" models.</p></div></details>
+      <details><summary>Is free shipping available?</summary><div class="muted"><p>Yes, on all orders above ₹1,000 across India.</p></div></details>
+      <details><summary>Can I order wholesale?</summary><div class="muted"><p>Yes. 5% discount on bulk purchases — contact us for a custom quote.</p></div></details>
+    {%- endif -%}
+  </div>
+</div></section>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "FAQ"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Have questions or need assistance?"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Our team is here to help with personalized support & expert advice."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Contact Us"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        {
+          "type": "question"
+        },
+        {
+          "type": "question"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

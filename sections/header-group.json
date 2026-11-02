@@ -1,0 +1,51 @@
+{
+  "name": "Header group",
+  "type": "header",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "m1": {
+          "type": "message",
+          "settings": {
+            "text": "FREE SHIPPING ABOVE ₹1000 ORDERS"
+          }
+        },
+        "m2": {
+          "type": "message",
+          "settings": {
+            "text": "5% DISCOUNT ON BULK ORDERS"
+          }
+        },
+        "m3": {
+          "type": "message",
+          "settings": {
+            "text": "SECURE PAYMENT"
+          }
+        },
+        "m4": {
+          "type": "message",
+          "settings": {
+            "text": "HELP CENTER · +91 79000 54449"
+          }
+        }
+      },
+      "block_order": [
+        "m1",
+        "m2",
+        "m3",
+        "m4"
+      ]
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "menu": "main-menu"
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "header"
+  ]
+}

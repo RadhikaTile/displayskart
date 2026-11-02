@@ -1,0 +1,13 @@
+<div class="pgh"><div class="w"><div class="crumb"><a href="{{ routes.root_url }}">Home</a> / Wishlist</div><h1>My Wishlist (<span data-wishlist-count>0</span>)</h1></div></div>
+<div class="w">
+  <div class="g4 js-grid" data-wishlist-grid></div>
+  <div class="bx2" data-wishlist-empty hidden style="text-align:center;padding:60px"><div style="font-size:44px">♡</div><h3>Your wishlist is empty</h3><p class="muted">Tap the heart on any product to save it here.</p><a class="btn fill" href="{{ routes.all_products_collection_url }}">Browse products</a></div>
+  <p data-wishlist-actions hidden style="text-align:center;margin-top:26px"><button type="button" class="btn fill" data-wishlist-addall>Add all to cart</button> &nbsp;<a class="btn" href="{{ routes.all_products_collection_url }}">Continue shopping</a></p>
+</div>
+
+{% schema %}
+{
+  "name": "Wishlist page",
+  "settings": []
+}
+{% endschema %}

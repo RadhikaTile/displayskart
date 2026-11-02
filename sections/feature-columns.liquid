@@ -1,0 +1,97 @@
+<section{% if section.settings.soft_bg %} style="background:var(--cream)"{% endif %}><div class="w">
+  {% render 'section-heading', eyebrow: section.settings.eyebrow, heading: section.settings.heading, text: section.settings.text %}
+  <div class="g3">
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+        <div class="hl" {{ block.shopify_attributes }}>
+          {% render 'img', image: block.settings.image, ratio: '500/340', placeholder: 'lifestyle-1', sizes: '(min-width:900px) 380px, 100vw' %}
+          <h3>{{ block.settings.title }}</h3><p>{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
+    {%- else -%}
+      <div class="hl">
+        {% render 'img', ratio: '500/340', placeholder: 'lifestyle-1', sizes: '(min-width:900px) 380px, 100vw' %}
+        <h3>Crystal-Clear Acrylic</h3><p>Premium plexiglass that keeps signage, menus and products looking sharp and professional.</p>
+      </div>
+      <div class="hl">
+        {% render 'img', ratio: '500/340', placeholder: 'lifestyle-2', sizes: '(min-width:900px) 380px, 100vw' %}
+        <h3>Built to Last</h3><p>Shatter-resistant and lightweight — crafted for long-lasting everyday use.</p>
+      </div>
+      <div class="hl">
+        {% render 'img', ratio: '500/340', placeholder: 'collection-1', sizes: '(min-width:900px) 380px, 100vw' %}
+        <h3>Custom Sizes</h3><p>A4, A5 and custom sizes; ask us for branded or made-to-order pieces.</p>
+      </div>
+    {%- endif -%}
+  </div>
+</div></section>
+
+{% schema %}
+{
+  "name": "Feature columns",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Why acrylic"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Material & Craft Highlights"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Sub text",
+      "default": "Lightweight, durable, shatter-resistant and crystal clear"
+    },
+    {
+      "type": "checkbox",
+      "id": "soft_bg",
+      "label": "Soft background",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Column",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Feature columns",
+      "blocks": [
+        {
+          "type": "column"
+        },
+        {
+          "type": "column"
+        },
+        {
+          "type": "column"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

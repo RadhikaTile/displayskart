@@ -1,0 +1,17 @@
+{%- paginate collections by 12 -%}
+<div class="pgh"><div class="w"><div class="crumb"><a href="{{ routes.root_url }}">Home</a> / Collections</div><h1>Collections</h1></div></div>
+<div class="w"><div class="g3">
+  {%- for c in collections -%}
+    <a class="ct" href="{{ c.url }}">{% render 'img', image: c.featured_image, ratio: '600/420', placeholder: 'collection-1', sizes: '(min-width:900px) 380px, 100vw' %}<div class="t"><b>{{ c.title }}</b><span>{{ c.products_count }} products →</span></div></a>
+  {%- endfor -%}
+</div>
+{%- if paginate.pages > 1 -%}<nav class="pag" aria-label="Pagination">{{ paginate | default_pagination }}</nav>{%- endif -%}
+</div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Collections list page",
+  "settings": []
+}
+{% endschema %}

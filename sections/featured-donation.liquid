@@ -1,0 +1,72 @@
+{%- assign col = section.settings.collection -%}
+{%- if col == blank or col.products.size == 0 -%}
+  {%- assign col = collections['acrylic-donation-box'] | default: collections['all'] | default: collections.all -%}
+{%- endif -%}
+<section><div class="w">
+  {%- assign hd = section.settings.heading | default: col.title | default: "Acrylic Donation Box" -%}
+  {% render 'section-heading', eyebrow: section.settings.eyebrow, heading: hd, text: section.settings.text %}
+  <div class="g4 js-grid">
+    {%- for product in col.products limit: section.settings.count -%}
+      {% render 'product-card', product: product %}
+    {%- else -%}
+      {%- for product in collections.all.products limit: section.settings.count -%}
+        {% render 'product-card', product: product %}
+      {%- else -%}
+        <p class="muted">No products available in this collection.</p>
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+  {%- if section.settings.show_view_all -%}
+    <p style="text-align:center;margin-top:22px"><a class="btn" href="{{ col.url | default: '/collections/acrylic-donation-box' }}">View all</a></p>
+  {%- endif -%}
+</div></section>
+
+{% schema %}
+{
+  "name": "Acrylic Donation Box",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Acrylic Donation Box"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Sub text"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "count",
+      "label": "Products to show",
+      "min": 4,
+      "max": 12,
+      "step": 4,
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show “View all” button",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Acrylic Donation Box"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,54 @@
+<section><div class="w art" style="max-width:860px;text-align:{{ section.settings.align }}">
+  {%- if section.settings.heading != blank -%}<h2 style="font-size:32px">{{ section.settings.heading }}</h2>{%- endif -%}
+  {{ section.settings.text }}
+  {%- if section.settings.button_label != blank -%}<p><a class="btn fill" href="{{ section.settings.button_link | default: routes.root_url }}">{{ section.settings.button_label }}</a></p>{%- endif -%}
+</div></section>
+
+{% schema %}
+{
+  "name": "Rich text",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "select",
+      "id": "align",
+      "label": "Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rich text"
+    }
+  ]
+}
+{% endschema %}

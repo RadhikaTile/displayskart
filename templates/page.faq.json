@@ -1,0 +1,77 @@
+{
+  "sections": {
+    "faq": {
+      "type": "faq",
+      "settings": {
+        "eyebrow": "FAQ",
+        "heading": "Frequently Asked Questions",
+        "text": "Find answers to common questions about DisplaysKart acrylic display stands, shipping, and bulk orders.",
+        "button_label": "Contact Support",
+        "button_link": "/pages/contact"
+      },
+      "blocks": {
+        "b1": {
+          "type": "question",
+          "settings": {
+            "question": "What is an acrylic display stand?",
+            "answer": "<p>A clear, lightweight holder made from acrylic (plexiglass) used to display signs, menus, photos, brochures or products.</p>"
+          }
+        },
+        "b2": {
+          "type": "question",
+          "settings": {
+            "question": "Can I buy acrylic display stands online in India?",
+            "answer": "<p>Yes. Pan-India delivery on tabletop, riser, wall-mount and floor-standing units.</p>"
+          }
+        },
+        "b3": {
+          "type": "question",
+          "settings": {
+            "question": "Do you offer sign holders for restaurants and hotels?",
+            "answer": "<p>Yes — menu holders in A4, A5 and custom sizes.</p>"
+          }
+        },
+        "b4": {
+          "type": "question",
+          "settings": {
+            "question": "Single-sided vs double-sided sign holder?",
+            "answer": "<p>Single-sided shows content on one face; double-sided shows it on both, ideal for high-traffic areas.</p>"
+          }
+        },
+        "b5": {
+          "type": "question",
+          "settings": {
+            "question": "Do you offer a donation box with a lock?",
+            "answer": "<p>Yes — 5x5x6\", 8x8x8\" and 12x12x12\" models.</p>"
+          }
+        },
+        "b6": {
+          "type": "question",
+          "settings": {
+            "question": "Is free shipping available?",
+            "answer": "<p>Yes, on all orders above ₹1,000 across India.</p>"
+          }
+        },
+        "b7": {
+          "type": "question",
+          "settings": {
+            "question": "Can I order wholesale?",
+            "answer": "<p>Yes. 5% discount on bulk purchases — contact us for a custom quote.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5",
+        "b6",
+        "b7"
+      ]
+    }
+  },
+  "order": [
+    "faq"
+  ]
+}

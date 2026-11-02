@@ -1,0 +1,20 @@
+<div class="w" style="max-width:900px">
+  <div class="crumb"><a href="{{ routes.root_url }}">Home</a> / <a href="{{ blog.url }}">{{ blog.title }}</a> / {{ article.title | truncate: 40 }}</div>
+  <small class="muted">{{ article.tags.first }}{% if article.tags.size > 0 %} · {% endif %}{{ article.published_at | date: '%d %b %Y' }} · by {{ article.author }}</small>
+  <h1 class="pt" style="margin-top:6px">{{ article.title }}</h1>
+  {%- if article.image -%}{% render 'img', image: article.image, ratio: '1000/480', sizes: '(min-width:900px) 860px, 100vw', loading: 'eager' %}{%- endif -%}
+  <div class="art" style="margin-top:22px">{{ article.content }}</div>
+  <p class="muted">{% for tag in article.tags %}<a href="{{ blog.url }}/tagged/{{ tag | handleize }}">#{{ tag }}</a> {% endfor %}</p>
+  <div class="sh" style="margin-top:34px"><h2>Related Posts</h2></div>
+  <div class="g3">
+    {%- assign shown = 0 -%}
+    {%- for a in blog.articles -%}{%- if a.id != article.id and shown < 3 -%}{% render 'article-card', article: a %}{%- assign shown = shown | plus: 1 -%}{%- endif -%}{%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Article page",
+  "settings": []
+}
+{% endschema %}

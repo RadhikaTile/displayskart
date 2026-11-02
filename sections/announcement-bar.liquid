@@ -1,0 +1,29 @@
+{%- if section.blocks.size > 0 -%}
+<div class="top" data-announce>
+  {%- for block in section.blocks -%}
+    <span class="ms" data-msg {{ block.shopify_attributes }}{% unless forloop.first %} hidden{% endunless %}>{{ block.settings.text }}</span>
+  {%- endfor -%}
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "max_blocks": 6,
+  "settings": [],
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Message",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "FREE SHIPPING ABOVE ₹1000 ORDERS"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

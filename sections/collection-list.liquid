@@ -1,0 +1,92 @@
+<section><div class="w">
+  {% render 'section-heading', eyebrow: section.settings.eyebrow, heading: section.settings.heading, text: section.settings.text %}
+  <div class="g3">
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+        {%- assign c = block.settings.collection -%}
+        {%- if c != blank -%}
+          {%- assign im = block.settings.image | default: c.featured_image -%}
+          <a class="ct" href="{{ c.url }}" {{ block.shopify_attributes }}>
+            {% render 'img', image: im, ratio: '600/420', placeholder: 'collection-1', sizes: '(min-width:900px) 380px, 100vw' %}
+            <div class="t"><b>{{ c.title }}</b><span>{{ c.products_count }} products →</span></div>
+          </a>
+        {%- else -%}
+          {%- assign demo_titles = 'Acrylic Sign Holders,Acrylic Photo Frames,Hotel Supplies & Organizer,Acrylic Donation Box,Wall Mount Display Frames,Acrylic Label Holders' | split: ',' -%}
+          {%- assign idx = forloop.index0 | modulo: demo_titles.size -%}
+          <a class="ct" href="{{ routes.all_products_collection_url }}" {{ block.shopify_attributes }}>
+            {% render 'img', image: block.settings.image, ratio: '600/420', placeholder: 'collection-1', sizes: '(min-width:900px) 380px, 100vw' %}
+            <div class="t"><b>{{ demo_titles[idx] }}</b><span>Explore collection →</span></div>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- else -%}
+      {%- assign def_handles = 'acrylic-sign-holders,acrylic-photo-frames,hotel-supplies-organizer,acrylic-donation-box,acrylic-wall-mount-display-frames,acrylic-label-holders-signs' | split: ',' -%}
+      {%- for handle in def_handles -%}
+        {%- assign c = collections[handle] -%}
+        <a class="ct" href="{{ c.url | default: '/collections/all' }}">
+          {% render 'img', image: c.featured_image, ratio: '600/420', placeholder: 'collection-1', sizes: '(min-width:900px) 380px, 100vw' %}
+          <div class="t"><b>{{ c.title | default: handle | replace: '-', ' ' | capitalize }}</b><span>{{ c.products_count | default: 8 }} products →</span></div>
+        </a>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+</div></section>
+
+{% schema %}
+{
+  "name": "Collection list",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Collections"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop Our Collections"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Sub text"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom image (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection list",
+      "blocks": [
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

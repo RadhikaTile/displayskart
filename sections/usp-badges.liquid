@@ -1,0 +1,57 @@
+<div class="w"><div class="badges">
+  {%- if section.blocks.size > 0 -%}
+    {%- for block in section.blocks -%}<div {{ block.shopify_attributes }}><span>{{ block.settings.icon }}</span>{{ block.settings.text }}</div>{%- endfor -%}
+  {%- else -%}
+    <div><span>🚚</span>FREE SHIPPING ABOVE ₹1000</div>
+    <div><span>🔒</span>SECURE PAYMENT</div>
+    <div><span>💬</span>HELP CENTER</div>
+    <div><span>🏷️</span>5% DISCOUNT ON BULK ORDERS</div>
+  {%- endif -%}
+</div></div>
+
+{% schema %}
+{
+  "name": "Trust badges",
+  "max_blocks": 4,
+  "settings": [],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Badge",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji)",
+          "default": "🚚"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "FREE SHIPPING ABOVE ₹1000"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust badges",
+      "blocks": [
+        {
+          "type": "badge"
+        },
+        {
+          "type": "badge"
+        },
+        {
+          "type": "badge"
+        },
+        {
+          "type": "badge"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

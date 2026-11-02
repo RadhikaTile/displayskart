@@ -1,0 +1,46 @@
+{
+  "sections": {
+    "main": {
+      "type": "track-order",
+      "blocks": {
+        "c1": {
+          "type": "carrier",
+          "settings": {
+            "name": "India Post",
+            "url": "https://www.indiapost.gov.in/"
+          }
+        },
+        "c2": {
+          "type": "carrier",
+          "settings": {
+            "name": "Delhivery",
+            "url": "https://www.delhivery.com/"
+          }
+        },
+        "c3": {
+          "type": "carrier",
+          "settings": {
+            "name": "DTDC",
+            "url": "https://www.dtdc.in/"
+          }
+        },
+        "c4": {
+          "type": "carrier",
+          "settings": {
+            "name": "Blue Dart",
+            "url": "https://www.bluedart.com/tracking"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

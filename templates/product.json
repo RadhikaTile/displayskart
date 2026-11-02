@@ -1,0 +1,50 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "b1": {
+          "type": "trust",
+          "settings": {
+            "text": "🚚 Free shipping ₹1000+"
+          }
+        },
+        "b2": {
+          "type": "trust",
+          "settings": {
+            "text": "🔒 Secure payment"
+          }
+        },
+        "b3": {
+          "type": "trust",
+          "settings": {
+            "text": "↩ Easy returns"
+          }
+        },
+        "b4": {
+          "type": "trust",
+          "settings": {
+            "text": "🏷️ 5% bulk discount"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ]
+    },
+    "related": {
+      "type": "related-products"
+    },
+    "recent": {
+      "type": "recently-viewed"
+    }
+  },
+  "order": [
+    "main",
+    "related",
+    "recent"
+  ]
+}

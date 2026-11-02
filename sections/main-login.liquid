@@ -1,0 +1,23 @@
+<div class="w" style="padding-top:20px"><div class="g2" style="align-items:start;margin-bottom:30px">
+  <div class="bx2">
+    <h3 style="margin-top:0">Sign in to your account</h3>
+    {%- form 'customer_login', novalidate: 'novalidate' -%}
+      {%- if form.errors -%}<p class="err">{{ form.errors | default_errors }}</p>{%- endif -%}
+      <input type="email" name="customer[email]" placeholder="Email *" autocomplete="email" required style="margin-bottom:10px">
+      <input type="password" name="customer[password]" placeholder="Password *" autocomplete="current-password" required style="margin-bottom:10px">
+      <p><button class="btn fill" type="submit">Sign In</button></p>
+    {%- endform -%}
+  </div>
+  <div class="bx2">
+    <h3 style="margin-top:0">New customer?</h3>
+    <p class="muted">Create an account to track orders, save addresses and check out faster.</p>
+    <a class="btn" href="{{ routes.account_register_url }}">Create account</a>
+  </div>
+</div></div>
+
+{% schema %}
+{
+  "name": "Login",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,9 @@
+<div class="w" style="text-align:center;padding:70px 20px 30px"><h1 style="font-size:72px;margin:0">404</h1><h2 style="margin:6px 0">Page not found</h2><p class="muted">The page you’re looking for doesn’t exist or has moved.</p><a class="btn fill" href="{{ routes.all_products_collection_url }}">Continue shopping</a> &nbsp;<a class="btn" href="{{ routes.root_url }}">Back to home</a></div>
+<section><div class="w"><div class="sh"><h2>You might like</h2></div><div class="g4">{%- for product in collections.all.products limit: 4 -%}{% render 'product-card', product: product %}{%- endfor -%}</div></div></section>
+
+{% schema %}
+{
+  "name": "404 page",
+  "settings": []
+}
+{% endschema %}

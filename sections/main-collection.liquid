@@ -1,0 +1,103 @@
+{%- paginate collection.products by section.settings.per_page -%}
+<div class="pgh"><div class="w">
+  <div class="crumb"><a href="{{ routes.root_url }}">Home</a> / {% if collection.handle != 'all' %}<a href="{{ routes.all_products_collection_url }}">Shop</a> / {% endif %}{{ collection.title }}</div>
+  <h1>{{ collection.title }}</h1>
+  {%- if section.settings.show_description and collection.description != blank -%}<div class="cdesc">{{ collection.description }}</div>{%- endif -%}
+</div></div>
+<div class="w"><div class="shop">
+  <aside class="side">
+    <div class="bx">
+      <h4>Categories</h4>
+      <a class="{% if collection.handle == 'all' or collection.handle == blank %}on{% endif %}" href="{{ routes.all_products_collection_url }}">All Products</a>
+      <a class="{% if collection.handle == 'acrylic-sign-holders' %}on{% endif %}" href="{{ routes.collections_url }}/acrylic-sign-holders">Acrylic Sign Holders</a>
+      <a class="{% if collection.handle == 'acrylic-photo-frames' %}on{% endif %}" href="{{ routes.collections_url }}/acrylic-photo-frames">Acrylic Photo Frames</a>
+      <a class="{% if collection.handle == 'hotel-supplies-organizer' %}on{% endif %}" href="{{ routes.collections_url }}/hotel-supplies-organizer">Hotel Supplies & Organizer</a>
+      <a class="{% if collection.handle == 'acrylic-donation-box' %}on{% endif %}" href="{{ routes.collections_url }}/acrylic-donation-box">Acrylic Donation Box</a>
+      <a class="{% if collection.handle == 'acrylic-wall-mount-display-frames' %}on{% endif %}" href="{{ routes.collections_url }}/acrylic-wall-mount-display-frames">Wall Mount Display & Frames</a>
+      <a class="{% if collection.handle == 'acrylic-sheets-accessories' %}on{% endif %}" href="{{ routes.collections_url }}/acrylic-sheets-accessories">Acrylic Sheets & Accessories</a>
+      <a class="{% if collection.handle == 'acrylic-sheets-colors' %}on{% endif %}" href="{{ routes.collections_url }}/acrylic-sheets-colors">Acrylic Sheets & Colors</a>
+      <a class="{% if collection.handle == 'acrylic-label-holders-signs' %}on{% endif %}" href="{{ routes.collections_url }}/acrylic-label-holders-signs">Acrylic Label Holders & Signs</a>
+      <a class="{% if collection.handle == 'exclusive-product' %}on{% endif %}" href="{{ routes.collections_url }}/exclusive-product">Exclusive Products</a>
+      <a class="{% if collection.handle == 'featured-products' %}on{% endif %}" href="{{ routes.collections_url }}/featured-products">Featured Products</a>
+      <a class="{% if collection.handle == 'retail-displays-for-shops' %}on{% endif %}" href="{{ routes.collections_url }}/retail-displays-for-shops">Retail Displays for Shops</a>
+      <a class="{% if collection.handle == 'vertical-storage-system' %}on{% endif %}" href="{{ routes.collections_url }}/vertical-storage-system">Vertical Storage System</a>
+      <a class="{% if collection.handle == 'office-suppliers-organizer' %}on{% endif %}" href="{{ routes.collections_url }}/office-suppliers-organizer">Office Suppliers & Organizer</a>
+      <a class="{% if collection.handle == 'home-interior-photo-frames' %}on{% endif %}" href="{{ routes.collections_url }}/home-interior-photo-frames">Home Interior Photo Frames</a>
+      <a class="{% if collection.handle == 'galleries-and-museums' %}on{% endif %}" href="{{ routes.collections_url }}/galleries-and-museums">Galleries and Museums</a>
+      <a class="{% if collection.handle == 'ngos-government-organizations' %}on{% endif %}" href="{{ routes.collections_url }}/ngos-government-organizations">NGO's & Organizations</a>
+    </div>
+    <form id="FilterForm" method="get" data-filter-form>
+      {%- for filter in collection.filters -%}
+        <div class="bx"><h4>{{ filter.label }}</h4>
+        {%- case filter.type -%}
+          {%- when 'price_range' -%}
+            <div class="prange">
+              <input type="number" name="{{ filter.min_value.param_name }}" value="{{ filter.min_value.value }}" placeholder="0" min="0" aria-label="Min price">
+              –
+              <input type="number" name="{{ filter.max_value.param_name }}" value="{{ filter.max_value.value }}" placeholder="{{ filter.range_max | divided_by: 100 }}" min="0" aria-label="Max price">
+            </div>
+          {%- else -%}
+            {%- for fv in filter.values -%}
+              <label class="fchk"><input type="checkbox" name="{{ fv.param_name }}" value="{{ fv.value }}"{% if fv.active %} checked{% endif %}{% if fv.count == 0 and fv.active == false %} disabled{% endif %}> {{ fv.label }} ({{ fv.count }})</label>
+            {%- endfor -%}
+        {%- endcase -%}
+        </div>
+      {%- endfor -%}
+      {%- if collection.filters.size > 0 -%}<noscript><button class="btn fill" type="submit">Apply</button></noscript><p><a href="{{ collection.url }}">Clear all</a></p>{%- endif -%}
+    </form>
+  </aside>
+  <div>
+    <div class="tb2" style="justify-content:flex-start;margin-bottom:16px;gap:6px">
+      <a class="btn {% if collection.handle == 'all' or collection.handle == blank %}fill{% endif %}" href="{{ routes.all_products_collection_url }}" style="padding:6px 14px;font-size:12px;border-radius:20px">All</a>
+      <a class="btn {% if collection.handle == 'acrylic-sign-holders' %}fill{% endif %}" href="{{ routes.collections_url }}/acrylic-sign-holders" style="padding:6px 14px;font-size:12px;border-radius:20px">Sign Holders</a>
+      <a class="btn {% if collection.handle == 'acrylic-photo-frames' %}fill{% endif %}" href="{{ routes.collections_url }}/acrylic-photo-frames" style="padding:6px 14px;font-size:12px;border-radius:20px">Photo Frames</a>
+      <a class="btn {% if collection.handle == 'hotel-supplies-organizer' %}fill{% endif %}" href="{{ routes.collections_url }}/hotel-supplies-organizer" style="padding:6px 14px;font-size:12px;border-radius:20px">Hotel Supplies</a>
+      <a class="btn {% if collection.handle == 'acrylic-donation-box' %}fill{% endif %}" href="{{ routes.collections_url }}/acrylic-donation-box" style="padding:6px 14px;font-size:12px;border-radius:20px">Donation Box</a>
+      <a class="btn {% if collection.handle == 'acrylic-wall-mount-display-frames' %}fill{% endif %}" href="{{ routes.collections_url }}/acrylic-wall-mount-display-frames" style="padding:6px 14px;font-size:12px;border-radius:20px">Wall Mount</a>
+      <a class="btn {% if collection.handle == 'acrylic-sheets-accessories' %}fill{% endif %}" href="{{ routes.collections_url }}/acrylic-sheets-accessories" style="padding:6px 14px;font-size:12px;border-radius:20px">Sheets & Colors</a>
+      <a class="btn {% if collection.handle == 'retail-displays-for-shops' %}fill{% endif %}" href="{{ routes.collections_url }}/retail-displays-for-shops" style="padding:6px 14px;font-size:12px;border-radius:20px">Retail Displays</a>
+      <a class="btn {% if collection.handle == 'exclusive-product' %}fill{% endif %}" href="{{ routes.collections_url }}/exclusive-product" style="padding:6px 14px;font-size:12px;border-radius:20px">Exclusive</a>
+    </div>
+    <div class="bar">
+      <span>Showing {{ collection.products.size }} of {{ collection.products_count }} products</span>
+      <select name="sort_by" form="FilterForm" data-autosubmit aria-label="Sort by">
+        {%- for option in collection.sort_options -%}<option value="{{ option.value }}"{% if option.value == collection.sort_by %} selected{% endif %}>{{ option.name }}</option>{%- endfor -%}
+      </select>
+    </div>
+    {%- if collection.products.size > 0 -%}
+      <div class="g3 js-grid">{%- for product in collection.products -%}{% render 'product-card', product: product %}{%- endfor -%}</div>
+    {%- else -%}
+      <div class="bx2" style="text-align:center;padding:50px"><p>No products found.</p><a class="btn fill" href="{{ collection.url }}">Clear filters</a></div>
+    {%- endif -%}
+    {%- if paginate.pages > 1 -%}<nav class="pag" aria-label="Pagination">{{ paginate | default_pagination }}</nav>{%- endif -%}
+  </div>
+</div></div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Collection page",
+  "settings": [
+    {
+      "type": "range",
+      "id": "per_page",
+      "label": "Products per page",
+      "min": 6,
+      "max": 36,
+      "step": 3,
+      "default": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show collection description",
+      "default": true
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Category menu (sidebar)"
+    }
+  ]
+}
+{% endschema %}

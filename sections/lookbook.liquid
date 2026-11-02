@@ -1,0 +1,119 @@
+<section><div class="w">
+  {% render 'section-heading', eyebrow: section.settings.eyebrow, heading: section.settings.heading, text: section.settings.text %}
+  <div class="lb">
+    {% render 'img', image: section.settings.image, ratio: '1200/620', placeholder: 'lifestyle-2', sizes: '100vw' %}
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+        {%- assign p = block.settings.product -%}
+        {%- if p == blank and collections.all.products.size > 0 -%}
+          {%- assign p = collections.all.products[forloop.index0] -%}
+        {%- endif -%}
+        <button type="button" class="hs" style="left:{{ block.settings.x }}%;top:{{ block.settings.y }}%" {{ block.shopify_attributes }}>
+          <span class="tip">
+            {%- if p != blank -%}
+              <b>{{ p.title | truncate: 48 }}</b><br>{{ p.price | money }}<br><a href="{{ p.url }}"><u>View product →</u></a>
+            {%- else -%}
+              <b>Acrylic Display Stand</b><br>₹499<br><a href="{{ routes.all_products_collection_url }}"><u>View product →</u></a>
+            {%- endif -%}
+          </span>
+        </button>
+      {%- endfor -%}
+    {%- else -%}
+      {%- assign hs_coords = '30:52,58:70,75:35' | split: ',' -%}
+      {%- for coord in hs_coords -%}
+        {%- assign xy = coord | split: ':' -%}
+        {%- assign p = collections.all.products[forloop.index0] -%}
+        <button type="button" class="hs" style="left:{{ xy[0] }}%;top:{{ xy[1] }}%">
+          <span class="tip">
+            {%- if p != blank -%}
+              <b>{{ p.title | truncate: 48 }}</b><br>{{ p.price | money }}<br><a href="{{ p.url }}"><u>View product →</u></a>
+            {%- else -%}
+              <b>Acrylic Display Stand</b><br>₹499<br><a href="{{ routes.all_products_collection_url }}"><u>View product →</u></a>
+            {%- endif -%}
+          </span>
+        </button>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+</div></section>
+
+{% schema %}
+{
+  "name": "Shop the look (hotspots)",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Shop the look"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Retail Display Ideas"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Sub text",
+      "default": "Hover the dots to see the products"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    }
+  ],
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "hotspot",
+      "name": "Hotspot",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "range",
+          "id": "x",
+          "label": "Horizontal position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 50,
+          "unit": "%"
+        },
+        {
+          "type": "range",
+          "id": "y",
+          "label": "Vertical position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 50,
+          "unit": "%"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop the look (hotspots)",
+      "blocks": [
+        {
+          "type": "hotspot"
+        },
+        {
+          "type": "hotspot"
+        },
+        {
+          "type": "hotspot"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

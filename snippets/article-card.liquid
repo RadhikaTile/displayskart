@@ -1,0 +1,8 @@
+<a class="bc" href="{{ article.url }}">
+  {% render 'img', image: article.image, ratio: '600/380', placeholder: 'lifestyle-1', sizes: '(min-width:900px) 380px, 100vw' %}
+  <div class="b">
+    <small>{{ article.tags.first | default: article.author }} · {{ article.published_at | date: '%d %b %Y' }}</small>
+    <h3>{{ article.title }}</h3>
+    <p class="muted" style="margin:0;font-size:14px">{{ article.excerpt_or_content | strip_html | truncate: 110 }}</p>
+  </div>
+</a>

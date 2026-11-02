@@ -1,0 +1,127 @@
+{%- liquid
+  assign current = product.selected_or_first_available_variant
+  assign pct = 0
+  if current.compare_at_price > current.price
+    assign diff = current.compare_at_price | minus: current.price
+    assign pct = diff | times: 100 | divided_by: current.compare_at_price
+  endif
+-%}
+<div class="w" data-product data-handle="{{ product.handle }}">
+  <div class="crumb"><a href="{{ routes.root_url }}">Home</a>{% if collection %} / <a href="{{ collection.url }}">{{ collection.title }}</a>{% endif %} / {{ product.title | truncate: 48 }}</div>
+  <div class="pd">
+    <div class="pgal">
+      <div class="im" data-main style="aspect-ratio:1/1">
+        {%- if product.featured_image -%}
+          {{- product.featured_image | image_url: width: 1100 | image_tag: loading: 'eager', widths: '500, 800, 1100', sizes: '(min-width:900px) 560px, 100vw', alt: product.featured_image.alt | default: product.title -}}
+        {%- else -%}{{- 'product-1' | placeholder_svg_tag -}}{%- endif -%}
+      </div>
+      {%- if product.images.size > 1 -%}
+        <div class="th">
+          {%- for image in product.images limit: 4 -%}
+            <div class="im{% if forloop.first %} act{% endif %}" data-thumb="{{ image | image_url: width: 1100 }}" style="aspect-ratio:1/1">{{ image | image_url: width: 200 | image_tag: loading: 'lazy', alt: image.alt | default: product.title }}</div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+    <div>
+      <h1 class="ptitle">{{ product.title }}</h1>
+      <div class="sku">SKU: <span data-sku>{{ current.sku | default: '—' }}</span>{% if product.vendor != blank %} · {{ product.vendor }}{% endif %}</div>
+      <p class="big" data-price-wrap>
+        {%- if current.compare_at_price > current.price -%}<s>{{ current.compare_at_price | money }}</s>{%- endif -%}
+        {{ current.price | money }}
+        {%- if pct > 0 %} <span class="badge" style="position:static;font-size:13px;vertical-align:middle">-{{ pct }}%</span>{%- endif -%}
+      </p>
+      {%- if section.settings.show_stock and current.inventory_management and current.inventory_quantity > 0 and current.inventory_quantity <= 10 -%}
+        <p class="lowstock">🔥 Only {{ current.inventory_quantity }} items left in stock</p>
+        <div class="stk" style="margin-bottom:12px"><i style="width:{{ current.inventory_quantity | times: 8 }}%"></i></div>
+      {%- endif -%}
+      <div class="muted">{{ product.description | strip_html | truncatewords: 40 }}</div>
+      {%- form 'product', product, class: 'pform', data-product-form: 'true' -%}
+        {%- if product.has_only_default_variant -%}
+          <input type="hidden" name="id" value="{{ current.id }}">
+        {%- else -%}
+          <label class="sku" for="VariantSelect">Options</label>
+          <select name="id" id="VariantSelect" data-variant-select>
+            {%- for variant in product.variants -%}<option value="{{ variant.id }}"{% if variant == current %} selected{% endif %}{% unless variant.available %} disabled{% endunless %}>{{ variant.title }} — {{ variant.price | money }}</option>{%- endfor -%}
+          </select>
+        {%- endif -%}
+        <div class="prow">
+          <div class="q"><button type="button" data-qty="-1">−</button><input type="number" name="quantity" value="1" min="1" aria-label="Quantity"><button type="button" data-qty="1">+</button></div>
+          <button type="submit" name="add" class="btn fill" data-atc{% unless current.available %} disabled{% endunless %}>{% if current.available %}Add to cart{% else %}Sold out{% endif %}</button>
+          <button type="submit" name="checkout" class="btn" data-buy{% unless current.available %} disabled{% endunless %}>Buy now</button>
+          {%- if settings.enable_wishlist -%}<button type="button" class="btn" data-wl="{{ product.handle }}" data-wl-label>♡ Wishlist</button>{%- endif -%}
+        </div>
+      {%- endform -%}
+      {%- if section.settings.show_trust -%}
+        <div class="trust">{%- for block in section.blocks -%}{%- if block.type == 'trust' -%}<span {{ block.shopify_attributes }}>{{ block.settings.text }}</span>{%- endif -%}{%- endfor -%}</div>
+      {%- endif -%}
+      <div style="font-size:13px;color:var(--mute)">
+        {%- if product.type != blank -%}Category: <a href="{{ product.type | url_for_type }}"><u>{{ product.type }}</u></a> · {% endif -%}
+        Share: <a href="https://www.facebook.com/sharer/sharer.php?u={{ shop.url | append: product.url | url_encode }}" target="_blank" rel="noopener">Facebook</a> ·
+        <a href="https://twitter.com/intent/tweet?url={{ shop.url | append: product.url | url_encode }}" target="_blank" rel="noopener">Twitter</a> ·
+        <a href="https://wa.me/?text={{ shop.url | append: product.url | url_encode }}" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+  <div class="tabs" data-tabs>
+    <button type="button" class="on" data-tab="0">Description</button>
+    <button type="button" data-tab="1">Additional Information</button>
+    <button type="button" data-tab="2">Reviews</button>
+  </div>
+  <div class="bx2 tabp" data-panel="0">{{ product.description }}</div>
+  <div class="bx2 tabp" data-panel="1" hidden>
+    <table>
+      <tr><th>SKU</th><td>{{ current.sku | default: '—' }}</td></tr>
+      {%- if product.type != blank -%}<tr><th>Type</th><td>{{ product.type }}</td></tr>{%- endif -%}
+      {%- if product.vendor != blank -%}<tr><th>Brand</th><td>{{ product.vendor }}</td></tr>{%- endif -%}
+      {%- if current.weight > 0 -%}<tr><th>Weight</th><td>{{ current.weight | weight_with_unit }}</td></tr>{%- endif -%}
+      <tr><th>Shipping</th><td>Free above {{ settings.free_shipping_threshold | times: 100 | money_without_trailing_zeros }}, pan-India</td></tr>
+      <tr><th>Bulk discount</th><td>5% on bulk orders</td></tr>
+    </table>
+  </div>
+  <div class="bx2 tabp" data-panel="2" hidden>
+    <div id="shopify-product-reviews" data-id="{{ product.id }}">{{ product.metafields.spr.reviews }}</div>
+    <p class="muted">Reviews appear here once a reviews app (e.g. Shopify Product Reviews, Judge.me) is installed.</p>
+  </div>
+  <div class="stk2" data-sticky>
+    <span>{{ product.title | truncate: 50 }}</span><b data-sticky-price>{{ current.price | money }}</b>
+    <button type="button" class="btn fill" data-sticky-atc{% unless current.available %} disabled{% endunless %}>Add to cart</button>
+  </div>
+  <script type="application/json" data-variants>{{ product.variants | json }}</script>
+  <script type="application/ld+json">{{ product | structured_data }}</script>
+</div>
+
+{% schema %}
+{
+  "name": "Product page",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_stock",
+      "label": "Show low-stock message",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust",
+      "label": "Show trust badges",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust",
+      "name": "Trust badge",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "🚚 Free shipping ₹1000+"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

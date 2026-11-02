@@ -1,0 +1,48 @@
+<div class="mq" aria-hidden="true"><div>
+  {%- if section.blocks.size > 0 -%}
+    {%- for i in (1..4) -%}{%- for block in section.blocks -%}<span {{ block.shopify_attributes }}>{{ block.settings.text }}</span>✦{%- endfor -%}{%- endfor -%}
+  {%- else -%}
+    {%- assign mq_items = 'Acrylic Sign Holders,Photo Frames,Donation Boxes,Riser Stands,Brochure Holders,Name Plates,Wall Mount Frames,Label Holders' | split: ',' -%}
+    {%- for i in (1..4) -%}{%- for item in mq_items -%}<span>{{ item }}</span>✦{%- endfor -%}{%- endfor -%}
+  {%- endif -%}
+</div></div>
+
+{% schema %}
+{
+  "name": "Scrolling text band",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Acrylic Sign Holders"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Scrolling text band",
+      "blocks": [
+        {
+          "type": "item"
+        },
+        {
+          "type": "item"
+        },
+        {
+          "type": "item"
+        },
+        {
+          "type": "item"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

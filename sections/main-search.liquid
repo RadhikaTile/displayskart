@@ -1,0 +1,92 @@
+{%- paginate search.results by 12 -%}
+{%- assign terms = section.settings.popular_searches | split: ',' -%}
+<div class="pgh"><div class="w">
+  <div class="crumb"><a href="{{ routes.root_url }}">Home</a> / Search</div>
+  <h1>{% if search.performed and search.terms != blank %}Search results{% else %}Search{% endif %}</h1>
+  <form class="sform" action="{{ routes.search_url }}" method="get" role="search">
+    <input type="text" name="q" value="{{ search.terms | escape }}" placeholder="Search products, SKU, collections…" autocomplete="off" aria-label="Search">
+    <input type="hidden" name="options[prefix]" value="last">
+  </form>
+</div></div>
+<div class="w" id="sres">
+{%- if search.performed and search.terms != blank -%}
+  {%- if search.results_count > 0 -%}
+    <div class="{% if search.filters.size > 0 %}shop{% endif %}">
+      {%- if search.filters.size > 0 -%}
+      <aside class="side">
+        <form id="SearchFilter" method="get" data-filter-form>
+          <input type="hidden" name="q" value="{{ search.terms | escape }}">
+          <input type="hidden" name="options[prefix]" value="last">
+          {%- for filter in search.filters -%}
+            <div class="bx"><h4>{{ filter.label }}</h4>
+            {%- case filter.type -%}
+              {%- when 'price_range' -%}
+                <div class="prange">
+                  <input type="number" name="{{ filter.min_value.param_name }}" value="{{ filter.min_value.value }}" placeholder="0" min="0" aria-label="Min price"> – 
+                  <input type="number" name="{{ filter.max_value.param_name }}" value="{{ filter.max_value.value }}" placeholder="{{ filter.range_max | divided_by: 100 }}" min="0" aria-label="Max price">
+                </div>
+              {%- else -%}
+                {%- for fv in filter.values -%}
+                  <label class="fchk"><input type="checkbox" name="{{ fv.param_name }}" value="{{ fv.value }}"{% if fv.active %} checked{% endif %}{% if fv.count == 0 and fv.active == false %} disabled{% endif %}> {{ fv.label }} ({{ fv.count }})</label>
+                {%- endfor -%}
+            {%- endcase -%}
+            </div>
+          {%- endfor -%}
+          <noscript><button class="btn fill" type="submit">Apply</button></noscript>
+        </form>
+      </aside>
+      {%- endif -%}
+      <div>
+        <div class="bar">
+          <span><b>{{ search.results_count }}</b> result{% if search.results_count != 1 %}s{% endif %} for “{{ search.terms }}”</span>
+          {%- if search.filters.size > 0 -%}
+          <select name="sort_by" form="SearchFilter" data-autosubmit aria-label="Sort results">
+            {%- for option in search.sort_options -%}<option value="{{ option.value }}"{% if option.value == search.sort_by %} selected{% endif %}>{{ option.name }}</option>{%- endfor -%}
+          </select>
+          {%- endif -%}
+        </div>
+        <div class="g4 sgrid">
+          {%- for item in search.results -%}
+            {%- case item.object_type -%}
+              {%- when 'product' -%}{% render 'product-card', product: item %}
+              {%- when 'article' -%}{% render 'article-card', article: item %}
+              {%- else -%}<a class="bx2" href="{{ item.url }}"><b>{{ item.title }}</b><p class="muted" style="margin:6px 0 0;font-size:14px">{{ item.content | strip_html | truncate: 90 }}</p></a>
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+        {%- if paginate.pages > 1 -%}<nav class="pag" aria-label="Pagination">{{ paginate | default_pagination }}</nav>{%- endif -%}
+      </div>
+    </div>
+  {%- else -%}
+    <div class="bx2" style="text-align:center;padding:44px 20px;margin-bottom:30px">
+      <div style="font-size:40px">🔍</div>
+      <h3 style="margin:8px 0">No results for “{{ search.terms }}”</h3>
+      <p class="muted">Check the spelling, try fewer words, or search by a type of product.</p>
+      <div>{%- for t in terms -%}<a class="schip" href="{{ routes.search_url }}?q={{ t | strip | url_encode }}&options%5Bprefix%5D=last">{{ t | strip }}</a>{%- endfor -%}</div>
+    </div>
+    <div class="sh"><h2>You might like</h2></div>
+    <div class="g4 sgrid">{%- for product in collections.all.products limit: 4 -%}{% render 'product-card', product: product %}{%- endfor -%}</div>
+  {%- endif -%}
+{%- else -%}
+  <p class="muted">Search across products, SKUs, collections and blog posts.</p>
+  <div class="sh"><h2>Popular searches</h2></div>
+  <div>{%- for t in terms -%}<a class="schip" href="{{ routes.search_url }}?q={{ t | strip | url_encode }}&options%5Bprefix%5D=last">{{ t | strip }}</a>{%- endfor -%}</div>
+  <div class="sh" style="margin-top:30px"><h2>Featured products</h2></div>
+  <div class="g4 sgrid">{%- for product in collections.all.products limit: 4 -%}{% render 'product-card', product: product %}{%- endfor -%}</div>
+{%- endif -%}
+</div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Search page",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "popular_searches",
+      "label": "Popular searches (comma separated)",
+      "default": "Sign holder, Photo frame, Donation box, Name plate, Riser stand, Wall mount, Napkin holder, Brochure holder"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,96 @@
+<div class="pgh"><div class="w">
+  <div class="crumb"><a href="{{ routes.root_url }}">Home</a> / {{ page.title | default: 'Track Order' }}</div>
+  <h1>{{ section.settings.heading }}</h1>
+  <p class="muted" style="margin:6px 0 0">{{ section.settings.text }}</p>
+</div></div>
+<div class="w"><div class="g2" style="align-items:start;margin-bottom:30px">
+  <div>
+    <div class="bx2">
+      <h3 style="margin-top:0">Your orders</h3>
+      <p class="muted" style="margin-top:0">Signed-in customers can see the live status of every order, including tracking links.</p>
+      {%- if customer -%}
+        <a class="btn fill" href="{{ routes.account_url }}">View my orders</a>
+      {%- else -%}
+        <a class="btn fill" href="{{ routes.account_login_url }}">Sign in to track</a> &nbsp;<a class="btn" href="{{ routes.account_register_url }}">Create account</a>
+      {%- endif -%}
+      <p class="muted" style="font-size:13px;margin-bottom:0">Ordered as a guest? Open the <b>order status</b> link in your confirmation or shipping email.</p>
+    </div>
+    {%- for block in section.blocks -%}
+      {%- if block.type == '@app' -%}<div class="bx2" style="margin-top:16px" {{ block.shopify_attributes }}>{% render block %}</div>{%- endif -%}
+    {%- endfor -%}
+  </div>
+  <div>
+    <div class="bx2" data-track>
+      <h3 style="margin-top:0">Have a courier tracking number?</h3>
+      <p class="muted" style="margin-top:0;font-size:14px">Enter it here, then choose your courier.</p>
+      <input type="text" data-awb placeholder="Tracking number (AWB)" aria-label="Tracking number">
+      <div class="car">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'carrier' -%}<button type="button" data-carrier="{{ block.settings.url | escape }}" {{ block.shopify_attributes }}>{{ block.settings.name }} ↗</button>{%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+    <div class="bx2" style="margin-top:16px">
+      <h3 style="margin-top:0">Need help?</h3>
+      <p class="muted" style="margin-top:0;font-size:14px">Can’t find your order? We’ll look it up for you.</p>
+      {%- if section.settings.phone != blank or section.settings.email != blank -%}<p style="margin:0">{% if section.settings.phone != blank %}📞 {{ section.settings.phone }}<br>{% endif %}{% if section.settings.email != blank %}✉ {{ section.settings.email }}{% endif %}</p>{%- endif -%}
+      <p><a class="btn" href="{{ routes.root_url }}pages/contact">Contact us</a></p>
+    </div>
+  </div>
+</div></div>
+
+{% schema %}
+{
+  "name": "Track order",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Track Your Order"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Intro text",
+      "default": "Check the status of your order or follow your shipment with the courier."
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Support phone",
+      "default": "+91 79000 54449"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Support email",
+      "default": "support@displayskart.com"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "carrier",
+      "name": "Courier",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Courier name",
+          "default": "India Post"
+        },
+        {
+          "type": "text",
+          "id": "url",
+          "label": "Tracking URL",
+          "info": "Use {awb} where the tracking number goes. Without {awb}, the number is copied for pasting on the courier site.",
+          "default": "https://www.indiapost.gov.in/"
+        }
+      ]
+    },
+    {
+      "type": "@app"
+    }
+  ]
+}
+{% endschema %}
