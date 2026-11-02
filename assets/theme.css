@@ -163,8 +163,11 @@ header.sticky .hd{transition:padding .3s}header.sticky.sc .hd{padding:6px 20px}h
 .ac button[title="Quick view"]{opacity:0;transform:translateX(8px);transition:.2s}.p2:hover .ac button[title="Quick view"]{opacity:1;transform:none}
 .ac button[title="Save to wishlist"]{font-size:17px;line-height:1;transition:transform .2s,background .2s}.ac button[title="Save to wishlist"]:hover{transform:scale(1.15)}
 .ac button[title="Save to wishlist"].on{background:var(--sale);color:#fff!important}
-@keyframes hb{30%{transform:scale(1.4)}60%{transform:scale(.9)}}.ac button.hb{animation:hb .45s}
-.ic a[title="Wishlist"]{display:inline-flex;gap:4px;align-items:center}
+.ic{display:flex;gap:18px;align-items:center;white-space:nowrap}
+.ic-btn{display:inline-flex;align-items:center;gap:6px;color:var(--ink);transition:color .2s,transform .2s;text-decoration:none;position:relative}
+.ic-btn:hover{color:var(--acc)}
+.ic-btn svg{display:block;flex-shrink:0}
+.ic-badge{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 5px;border-radius:10px;background:var(--acc);color:var(--bg);font-size:11px;font-weight:700;line-height:1}
 @media(hover:none){.ac button[title="Quick view"]{display:none}}
 /* ---- Menu: clean Title Case (no uppercase / wide tracking) ---- */
 .mn li{text-transform:none;letter-spacing:0;font-size:15px;font-weight:500}
@@ -205,11 +208,12 @@ body:has(.stk2.on) #wa,body:has(.stk2.on) #bt{bottom:84px}
 .mn.open .mega>div{display:block}.mn.open .mega>a{display:none}.mega a{padding:7px 0;font-size:14px}
 }
 @media(max-width:900px){.hd>.search{order:5;flex-basis:100%;max-width:none;width:100%}}
-/* ---- Smart search ---- */
 .sbox{position:relative;flex:none;width:270px}
 .sbox .search{width:100%;max-width:none;padding-right:78px}
 .sgo,.sclr{position:absolute;top:50%;transform:translateY(-50%);border:0;cursor:pointer}
-.sgo{right:5px;width:34px;height:34px;border-radius:50%;background:var(--acc);color:var(--bg);font-size:14px}
+.sgo{right:5px;width:34px;height:34px;border-radius:50%;background:var(--acc);color:var(--bg);display:inline-flex;align-items:center;justify-content:center;transition:transform .2s,opacity .2s}
+.sgo:hover{transform:translateY(-50%) scale(1.05);opacity:.92}
+.sgo svg{display:block}
 .sclr{right:44px;background:none;color:var(--mute);font-size:15px;display:none;padding:4px}.sbox.has .sclr{display:block}
 .sdrop{position:absolute;top:calc(100% + 8px);right:0;width:430px;max-width:calc(100vw - 24px);background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 20px 44px rgba(40,25,10,.18);padding:8px;z-index:90;max-height:72vh;overflow:auto;animation:fadeUp .2s}
 .sdrop[hidden]{display:none!important}

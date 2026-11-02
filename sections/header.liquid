@@ -10,10 +10,10 @@
     <a class="logo" href="{{ routes.root_url }}">
       {%- if section.settings.logo != blank -%}
         {{ section.settings.logo | image_url: width: 400 | image_tag: height: 40, alt: shop.name, loading: 'eager' }}
-      {%- elsif section.settings.logo_text != blank -%}
-        {{ section.settings.logo_text }}<b>{{ section.settings.logo_accent }}</b>
       {%- else -%}
-        {{ shop.name }}
+        {%- assign l_text = section.settings.logo_text | default: 'Displays' -%}
+        {%- assign l_acc = section.settings.logo_accent | default: 'Kart' -%}
+        {{ l_text }}<b>{{ l_acc }}</b>
       {%- endif -%}
     </a>
     <nav class="mn" aria-label="Main">
@@ -21,7 +21,7 @@
         {%- for link in menu.links -%}
           {%- assign lt = link.title | downcase -%}
           {%- assign is_cats = false -%}
-          {%- if lt contains 'collection' or lt contains 'shop' or lt contains 'categor' or lt contains 'product' -%}
+          {%- if lt contains 'collection' or lt contains 'shop' or lt contains 'categor' or lt contains 'product' or lt contains 'catalog' -%}
             {%- assign is_cats = true -%}
           {%- endif -%}
           <li{% if link.active or link.child_active %} class="on"{% endif %}>
@@ -79,15 +79,31 @@
       <input class="search" type="text" name="q" value="{{ search.terms | escape }}" placeholder="Search products, SKU…" role="combobox" aria-expanded="false" aria-controls="sd" aria-autocomplete="list" autocomplete="off" aria-label="Search products">
       <input type="hidden" name="options[prefix]" value="last">
       <button type="button" class="sclr" aria-label="Clear search">✕</button>
-      <button type="submit" class="sgo" aria-label="Search">🔍</button>
+      <button type="submit" class="sgo" aria-label="Search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
       <div class="sdrop" id="sd" role="listbox" hidden></div>
     </form>
     <div class="ic">
-      {%- if shop.customer_accounts_enabled -%}<a href="{{ routes.account_url }}" title="Account" aria-label="My account">👤</a>{%- endif -%}
-      {%- if settings.enable_wishlist -%}<a href="{% if routes.root_url == '/' %}/pages/wishlist{% else %}{{ routes.root_url }}/pages/wishlist{% endif %}" title="Wishlist" aria-label="Wishlist">♡ <b id="wc">0</b></a>{%- endif -%}
-      <a href="{{ routes.cart_url }}" data-cart-open aria-label="{{ 'general.cart' | t }}">🛍 <b id="cc">{{ cart.item_count }}</b></a>
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{{ routes.account_url }}" class="ic-btn" title="Account" aria-label="My account">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </a>
+      {%- endif -%}
+      {%- if settings.enable_wishlist -%}
+        <a href="{% if routes.root_url == '/' %}/pages/wishlist{% else %}{{ routes.root_url }}/pages/wishlist{% endif %}" class="ic-btn" title="Wishlist" aria-label="Wishlist">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span class="ic-badge" id="wc">0</span>
+        </a>
+      {%- endif -%}
+      <a href="{{ routes.cart_url }}" class="ic-btn" data-cart-open aria-label="{{ 'general.cart' | t }}">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="ic-badge" id="cc">{{ cart.item_count }}</span>
+      </a>
     </div>
-    <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" data-burger>☰</button>
+    <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" data-burger>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
   </div>
 </header>
 
