@@ -49,9 +49,68 @@
     </div>
   </div>
 {%- elsif h == 'track-order' or h == 'track' -%}
-  {% section 'track-order' %}
+  <div class="pgh"><div class="w">
+    <div class="crumb"><a href="{{ routes.root_url }}">Home</a> / {{ page.title | default: 'Track Order' }}</div>
+    <h1>Track Your Order</h1>
+    <p class="muted" style="margin:6px 0 0">Check the status of your order or follow your shipment with the courier.</p>
+  </div></div>
+  <div class="w"><div class="g2" style="align-items:start;margin-bottom:30px">
+    <div>
+      <div class="bx2">
+        <h3 style="margin-top:0">Your orders</h3>
+        <p class="muted" style="margin-top:0">Signed-in customers can see the live status of every order, including tracking links.</p>
+        {%- if customer -%}
+          <a class="btn fill" href="{{ routes.account_url }}">View my orders</a>
+        {%- else -%}
+          <a class="btn fill" href="{{ routes.account_login_url }}">Sign in to track</a> &nbsp;<a class="btn" href="{{ routes.account_register_url }}">Create account</a>
+        {%- endif -%}
+        <p class="muted" style="font-size:13px;margin-bottom:0">Ordered as a guest? Open the <b>order status</b> link in your confirmation or shipping email.</p>
+      </div>
+    </div>
+    <div>
+      <div class="bx2" data-track>
+        <h3 style="margin-top:0">Have a courier tracking number?</h3>
+        <p class="muted" style="margin-top:0;font-size:14px">Enter it here, then choose your courier.</p>
+        <input type="text" data-awb placeholder="Tracking number (AWB)" aria-label="Tracking number">
+        <div class="car" style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+          <a class="btn" href="https://www.indiapost.gov.in/" target="_blank" rel="noopener">India Post ↗</a>
+          <a class="btn" href="https://www.delhivery.com/" target="_blank" rel="noopener">Delhivery ↗</a>
+          <a class="btn" href="https://www.bluedart.com/" target="_blank" rel="noopener">Blue Dart ↗</a>
+        </div>
+      </div>
+      <div class="bx2" style="margin-top:16px">
+        <h3 style="margin-top:0">Need help?</h3>
+        <p class="muted" style="margin-top:0;font-size:14px">Can’t find your order? We’ll look it up for you.</p>
+        <p style="margin:0">📞 +91 79000 54449<br>✉ support@displayskart.com</p>
+        <p><a class="btn" href="{{ routes.root_url }}pages/contact" style="margin-top:8px">Contact us</a></p>
+      </div>
+    </div>
+  </div></div>
 {%- elsif h == 'contact' or h == 'contact-us' -%}
-  {% section 'contact-form' %}
+  <div class="pgh"><div class="w"><div class="crumb"><a href="{{ routes.root_url }}">Home</a> / {{ page.title | default: 'Contact Us' }}</div><h1>{{ page.title | default: 'Contact Us' }}</h1></div></div>
+  <div class="w"><div class="g2" style="align-items:start;margin-bottom:30px">
+    <div class="bx2">
+      <h3 style="margin-top:0">Send us a message</h3>
+      {%- form 'contact', id: 'ContactForm' -%}
+        {%- if form.posted_successfully? -%}<p style="color:green">Thanks for contacting us. We’ll get back to you soon.</p>{%- endif -%}
+        {%- if form.errors -%}<p class="err">{{ form.errors | default_errors }}</p>{%- endif -%}
+        <input type="text" name="contact[name]" placeholder="Your name" value="{{ form.name }}" style="width:100%;padding:10px;margin-bottom:10px;border:1px solid var(--border);border-radius:4px" required>
+        <input type="email" name="contact[email]" placeholder="Email" value="{{ form.email }}" style="width:100%;padding:10px;margin-bottom:10px;border:1px solid var(--border);border-radius:4px" required>
+        <input type="tel" name="contact[phone]" placeholder="Phone" value="{{ form.phone }}" style="width:100%;padding:10px;margin-bottom:10px;border:1px solid var(--border);border-radius:4px">
+        <select name="contact[Enquiry type]" aria-label="Enquiry type" style="width:100%;padding:10px;margin-bottom:10px;border:1px solid var(--border);border-radius:4px"><option>General enquiry</option><option>Bulk / wholesale quote</option><option>Custom size / branding</option><option>Order support</option></select>
+        <textarea name="contact[body]" rows="5" placeholder="Message (mention product, size, quantity for bulk quotes)" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:4px" required>{{ form.body }}</textarea><br><br>
+        <button class="btn fill" type="submit">Send Message</button>
+      {%- endform -%}
+    </div>
+    <div>
+      <div class="bx2" style="margin-bottom:16px">
+        <p style="margin-top:0"><b>Displayskart</b><br>Behind Bajaj Show room, 6th Main Road HVR Layout, Kamakshi Palya – 560079, Bangaluru</p>
+        <p>📞 +91 79000 54449<br>✉ sales@displayskart.com<br>✉ support@displayskart.com</p>
+        <p style="margin-bottom:0">Hours: Mon - Sat: 9:30 AM - 6:30 PM</p>
+      </div>
+      {% render 'img', ratio: '600/300', placeholder: 'lifestyle-2', demo_index: 8, sizes: '(min-width:900px) 560px, 100vw' %}
+    </div>
+  </div></div>
 {%- else -%}
   <div class="pgh"><div class="w"><div class="crumb"><a href="{{ routes.root_url }}">Home</a> / {{ page.title }}</div><h1>{{ page.title }}</h1></div></div>
   <div class="w art" style="max-width:860px;padding-bottom:20px">
