@@ -1,8 +1,8 @@
 {%- assign menu = linklists[section.settings.menu] -%}
-{%- if section.settings.show_topbar -%}
+{%- if section.settings.show_topbar != false -%}
 <div class="tb"><div class="w">
-  <span>{% if section.settings.phone != blank %}📞 {{ section.settings.phone }}{% endif %}{% if section.settings.email != blank %} &nbsp;·&nbsp; ✉ {{ section.settings.email }}{% endif %}</span>
-  <span>{% if section.settings.show_track %}<a href="{% if routes.root_url == '/' %}/pages/track-order{% else %}{{ routes.root_url }}/pages/track-order{% endif %}"><u>Track Order</u></a> &nbsp;·&nbsp; {% endif %}{{ section.settings.topbar_right }}</span>
+  <span>{% if section.settings.phone != blank %}📞 {{ section.settings.phone }}{% else %}📞 +91 79000 54449{% endif %}{% if section.settings.email != blank %} &nbsp;·&nbsp; ✉ {{ section.settings.email }}{% else %} &nbsp;·&nbsp; ✉ sales@displayskart.com{% endif %}</span>
+  <span><a href="{% if routes.root_url == '/' %}/pages/track-order{% else %}{{ routes.root_url }}/pages/track-order{% endif %}"><u>Track Order</u></a> &nbsp;·&nbsp; {{ section.settings.topbar_right | default: 'Bengaluru, India · Pan-India delivery' }}</span>
 </div></div>
 {%- endif -%}
 <header class="sticky" data-header>
@@ -11,67 +11,84 @@
       {%- if section.settings.logo != blank -%}
         {{ section.settings.logo | image_url: width: 400 | image_tag: height: 40, alt: shop.name, loading: 'eager' }}
       {%- else -%}
-        {%- assign l_text = section.settings.logo_text | default: 'Displays' -%}
-        {%- assign l_acc = section.settings.logo_accent | default: 'Kart' -%}
-        {{ l_text }}<b>{{ l_acc }}</b>
+        Displays<b>Kart</b>
       {%- endif -%}
     </a>
     <nav class="mn" aria-label="Main">
       <ul>
-        {%- for link in menu.links -%}
-          {%- assign lt = link.title | downcase -%}
-          {%- assign is_cats = false -%}
-          {%- if lt contains 'collection' or lt contains 'shop' or lt contains 'categor' or lt contains 'product' or lt contains 'catalog' -%}
-            {%- assign is_cats = true -%}
-          {%- endif -%}
-          <li{% if link.active or link.child_active %} class="on"{% endif %}>
-            <a href="{{ link.url }}">{{ link.title }}{% if link.links.size > 0 or is_cats %} ▾{% endif %}</a>
-            {%- if is_cats -%}
-              <div class="mega">
-                <div>
-                  <a href="{{ routes.all_products_collection_url }}"><b>All Products (Shop All)</b></a>
-                  <a href="{{ routes.collections_url }}/acrylic-sign-holders">Acrylic Sign Holders</a>
-                  <a href="{{ routes.collections_url }}/acrylic-photo-frames">Acrylic Photo Frames</a>
-                  <a href="{{ routes.collections_url }}/hotel-supplies-organizer">Hotel Supplies & Organizer</a>
-                  <a href="{{ routes.collections_url }}/acrylic-donation-box">Acrylic Donation Box</a>
-                  <a href="{{ routes.collections_url }}/acrylic-wall-mount-display-frames">Wall Mount Display & Frames</a>
-                  <a href="{{ routes.collections_url }}/acrylic-sheets-accessories">Acrylic Sheets & Accessories</a>
-                  <a href="{{ routes.collections_url }}/acrylic-sheets-colors">Acrylic Sheets & Colors</a>
-                  <a href="{{ routes.collections_url }}/acrylic-label-holders-signs">Acrylic Label Holders & Signs</a>
-                </div>
-                <div>
-                  <a href="{{ routes.collections_url }}/exclusive-product">Exclusive Products</a>
-                  <a href="{{ routes.collections_url }}/featured-products">Featured Products</a>
-                  <a href="{{ routes.collections_url }}/retail-displays-for-shops">Retail Displays for Shops</a>
-                  <a href="{{ routes.collections_url }}/vertical-storage-system">Vertical Storage System</a>
-                  <a href="{{ routes.collections_url }}/office-suppliers-organizer">Office Suppliers & Organizer</a>
-                  <a href="{{ routes.collections_url }}/home-interior-photo-frames">Home Interior Photo Frames</a>
-                  <a href="{{ routes.collections_url }}/galleries-and-museums">Galleries and Museums</a>
-                  <a href="{{ routes.collections_url }}/ngos-government-organizations">NGO's & Organizations</a>
-                </div>
-                <a href="{{ routes.all_products_collection_url }}">
-                  {%- if section.settings.mega_image != blank -%}
-                    {% render 'img', image: section.settings.mega_image, ratio: '190/230', sizes: '190px' %}
-                  {%- else -%}
-                    {% render 'img', ratio: '190/230', placeholder: 'collection-1', sizes: '190px' %}
-                  {%- endif -%}
-                  <b style="font-size:13px">{{ section.settings.mega_text | default: 'All 16+ Categories →' }}</b>
-                </a>
-              </div>
-            {%- elsif link.links.size > 0 -%}
-              {%- assign half = link.links.size | divided_by: 2.0 | ceil -%}
-              <div class="mega">
-                <div>{% for child in link.links limit: half %}<a href="{{ child.url }}">{{ child.title }}</a>{% endfor %}</div>
-                <div>{% for child in link.links offset: half %}<a href="{{ child.url }}">{{ child.title }}</a>{% endfor %}</div>
-                {%- if section.settings.mega_image != blank -%}
-                  <a href="{{ section.settings.mega_link | default: link.url }}">{% render 'img', image: section.settings.mega_image, ratio: '190/230', sizes: '190px' %}<b style="font-size:13px">{{ section.settings.mega_text | default: 'Explore Collections →' }}</b></a>
-                {%- else -%}
-                  <a href="{{ routes.all_products_collection_url }}">{% render 'img', ratio: '190/230', placeholder: 'collection-1', sizes: '190px' %}<b style="font-size:13px">All Products →</b></a>
-                {%- endif -%}
-              </div>
+        {%- if menu.links.size > 3 -%}
+          {%- for link in menu.links -%}
+            {%- assign lt = link.title | downcase -%}
+            {%- assign is_cats = false -%}
+            {%- if lt contains 'collection' or lt contains 'shop' or lt contains 'categor' or lt contains 'product' or lt contains 'catalog' -%}
+              {%- assign is_cats = true -%}
             {%- endif -%}
+            <li{% if link.active or link.child_active %} class="on"{% endif %}>
+              <a href="{{ link.url }}">{% if lt == 'catalog' %}Shop{% else %}{{ link.title }}{% endif %}{% if link.links.size > 0 or is_cats %} ▾{% endif %}</a>
+              {%- if is_cats -%}
+                <div class="mega">
+                  <div>
+                    <a href="{{ routes.collections_url }}/acrylic-sign-holders">Acrylic Sign Holders</a>
+                    <a href="{{ routes.collections_url }}/acrylic-photo-frames">Acrylic Photo Frames</a>
+                    <a href="{{ routes.collections_url }}/hotel-supplies-organizer">Hotel Supplies & Organizer</a>
+                    <a href="{{ routes.collections_url }}/exclusive-product">Exclusive Products</a>
+                  </div>
+                  <div>
+                    <a href="{{ routes.collections_url }}/acrylic-donation-box">Suggestion & Donation Box</a>
+                    <a href="{{ routes.collections_url }}/acrylic-wall-mount-display-frames">Wall Mount Display & Frames</a>
+                    <a href="{{ routes.collections_url }}/acrylic-sheets-accessories">Acrylic Sheets & Accessories</a>
+                    <a href="{{ routes.collections_url }}/acrylic-label-holders-signs">Acrylic Label Holders & Signs</a>
+                  </div>
+                  <a href="{{ routes.all_products_collection_url }}">
+                    {%- if section.settings.mega_image != blank -%}
+                      {% render 'img', image: section.settings.mega_image, ratio: '190/230', sizes: '190px' %}
+                    {%- else -%}
+                      {% render 'img', ratio: '190/230', placeholder: 'collection-1', demo_index: 10, sizes: '190px' %}
+                    {%- endif -%}
+                    <b style="font-size:13px">{{ section.settings.mega_text | default: 'Exclusive Products →' }}</b>
+                  </a>
+                </div>
+              {%- elsif link.links.size > 0 -%}
+                {%- assign half = link.links.size | divided_by: 2.0 | ceil -%}
+                <div class="mega">
+                  <div>{% for child in link.links limit: half %}<a href="{{ child.url }}">{{ child.title }}</a>{% endfor %}</div>
+                  <div>{% for child in link.links offset: half %}<a href="{{ child.url }}">{{ child.title }}</a>{% endfor %}</div>
+                  <a href="{{ routes.all_products_collection_url }}">
+                    {% render 'img', ratio: '190/230', placeholder: 'collection-1', demo_index: 10, sizes: '190px' %}
+                    <b style="font-size:13px">All Products →</b>
+                  </a>
+                </div>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        {%- else -%}
+          <li><a href="{{ routes.root_url }}">Home</a></li>
+          <li>
+            <a href="{{ routes.all_products_collection_url }}">Shop ▾</a>
+            <div class="mega">
+              <div>
+                <a href="{{ routes.collections_url }}/acrylic-sign-holders">Acrylic Sign Holders</a>
+                <a href="{{ routes.collections_url }}/acrylic-photo-frames">Acrylic Photo Frames</a>
+                <a href="{{ routes.collections_url }}/hotel-supplies-organizer">Hotel Supplies & Organizer</a>
+                <a href="{{ routes.collections_url }}/exclusive-product">Exclusive Products</a>
+              </div>
+              <div>
+                <a href="{{ routes.collections_url }}/acrylic-donation-box">Suggestion & Donation Box</a>
+                <a href="{{ routes.collections_url }}/acrylic-wall-mount-display-frames">Wall Mount Display & Frames</a>
+                <a href="{{ routes.collections_url }}/acrylic-sheets-accessories">Acrylic Sheets & Accessories</a>
+                <a href="{{ routes.collections_url }}/acrylic-label-holders-signs">Acrylic Label Holders & Signs</a>
+              </div>
+              <a href="{{ routes.all_products_collection_url }}">
+                {% render 'img', ratio: '190/230', placeholder: 'collection-1', demo_index: 10, sizes: '190px' %}
+                <b style="font-size:13px">Exclusive Products →</b>
+              </a>
+            </div>
           </li>
-        {%- endfor -%}
+          <li><a href="{% if routes.root_url == '/' %}/pages/applications{% else %}{{ routes.root_url }}/pages/applications{% endif %}">Applications</a></li>
+          <li><a href="{% if routes.root_url == '/' %}/blogs/news{% else %}{{ routes.root_url }}/blogs/news{% endif %}">Blog</a></li>
+          <li><a href="{% if routes.root_url == '/' %}/pages/about-us{% else %}{{ routes.root_url }}/pages/about-us{% endif %}">About</a></li>
+          <li><a href="{% if routes.root_url == '/' %}/pages/contact{% else %}{{ routes.root_url }}/pages/contact{% endif %}">Contact Us</a></li>
+        {%- endif -%}
       </ul>
     </nav>
     <div style="flex:1"></div>
@@ -79,31 +96,17 @@
       <input class="search" type="text" name="q" value="{{ search.terms | escape }}" placeholder="Search products, SKU…" role="combobox" aria-expanded="false" aria-controls="sd" aria-autocomplete="list" autocomplete="off" aria-label="Search products">
       <input type="hidden" name="options[prefix]" value="last">
       <button type="button" class="sclr" aria-label="Clear search">✕</button>
-      <button type="submit" class="sgo" aria-label="Search">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      </button>
+      <button type="submit" class="sgo" aria-label="Search">🔍</button>
       <div class="sdrop" id="sd" role="listbox" hidden></div>
     </form>
     <div class="ic">
-      {%- if shop.customer_accounts_enabled -%}
-        <a href="{{ routes.account_url }}" class="ic-btn" title="Account" aria-label="My account">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        </a>
-      {%- endif -%}
+      <a href="{{ routes.account_url }}" title="Account" aria-label="Account">👤</a>
       {%- if settings.enable_wishlist -%}
-        <a href="{% if routes.root_url == '/' %}/pages/wishlist{% else %}{{ routes.root_url }}/pages/wishlist{% endif %}" class="ic-btn" title="Wishlist" aria-label="Wishlist">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          <span class="ic-badge" id="wc">0</span>
-        </a>
+        <a href="{% if routes.root_url == '/' %}/pages/wishlist{% else %}{{ routes.root_url }}/pages/wishlist{% endif %}" title="Wishlist" aria-label="Wishlist">♡ <b id="wc">0</b></a>
       {%- endif -%}
-      <a href="{{ routes.cart_url }}" class="ic-btn" data-cart-open aria-label="{{ 'general.cart' | t }}">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-        <span class="ic-badge" id="cc">{{ cart.item_count }}</span>
-      </a>
+      <a href="{{ routes.cart_url }}" data-cart-open aria-label="{{ 'general.cart' | t }}">🛍 <b id="cc">{{ cart.item_count }}</b></a>
     </div>
-    <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" data-burger>
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-    </button>
+    <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" data-burger>☰</button>
   </div>
 </header>
 

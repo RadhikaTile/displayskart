@@ -8,13 +8,13 @@
         "m1": {
           "type": "message",
           "settings": {
-            "text": "FREE SHIPPING ABOVE ₹1000 ORDERS"
+            "text": "5% DISCOUNT ON BULK ORDERS"
           }
         },
         "m2": {
           "type": "message",
           "settings": {
-            "text": "5% DISCOUNT ON BULK ORDERS"
+            "text": "FREE SHIPPING ABOVE ₹1000 ORDERS · 5% DISCOUNT ON BULK ORDERS"
           }
         },
         "m3": {
@@ -40,7 +40,12 @@
     "header": {
       "type": "header",
       "settings": {
-        "menu": "main-menu"
+        "menu": "main-menu",
+        "show_topbar": true,
+        "phone": "+91 79000 54449",
+        "email": "sales@displayskart.com",
+        "show_track": true,
+        "topbar_right": "Bengaluru, India · Pan-India delivery"
       }
     }
   },
