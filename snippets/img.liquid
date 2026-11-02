@@ -1,17 +1,26 @@
 {%- comment -%}
-  Responsive image with placeholder. Params: image, ratio ("1/1"), sizes, placeholder, loading, class, alt
+  Responsive image with fallback demo photo. Params: image, ratio ("1/1"), sizes, placeholder, loading, class, alt, demo_index
 {%- endcomment -%}
 {%- liquid
   assign r = ratio | default: '1/1'
   assign ld = loading | default: 'lazy'
   assign sz = sizes | default: '100vw'
-  assign alt_text = image.alt | default: alt | default: ''
-  assign ph = placeholder | default: 'image'
+  assign alt_text = image.alt | default: alt | default: 'DisplaysKart Display Solution'
+  assign ph = placeholder | default: 'collection-1'
 -%}
-<div class="im{% if class != blank %} {{ class }}{% endif %}" style="aspect-ratio:{{ r }}">
+<div class="im{% if class != blank %} {{ class }}{% endif %}" style="aspect-ratio:{{ r }};overflow:hidden;position:relative">
   {%- if image != blank -%}
     {{- image | image_url: width: 1600 | image_tag: loading: ld, widths: '320, 480, 640, 800, 1100, 1600', sizes: sz, alt: alt_text -}}
   {%- else -%}
-    {{- ph | placeholder_svg_tag -}}
+    {%- assign demo_photos = 'photo-1513519245088-0e12902e5a38,photo-1472851294608-062f824d29cc,photo-1497366216548-37526070297c,photo-1555041469-a586c61ea9bc,photo-1586023492125-27b2c045efd7,photo-1524758631624-e2822e304c36,photo-1566073771259-6a8506099945,photo-1556740738-b6a63e27c4df,photo-1517248135467-4c7edcad34c4,photo-1441986300917-64674bd600d8,photo-1522708323590-d24dbb6b0267,photo-1551882547-ff40c63fe5fa,photo-1497366811353-6870744d04b2,photo-1560448204-e02f11c3d0e2,photo-1499750310107-5fef28a66643,photo-1542744173-8e7e53415bb0,photo-1523275335684-37898b6baf30,photo-1460925895917-afdab827c52f' | split: ',' -%}
+    {%- if demo_index != blank -%}
+      {%- assign idx = demo_index | minus: 1 | modulo: demo_photos.size -%}
+    {%- else -%}
+      {%- assign str_len = alt_text | size -%}
+      {%- assign ph_len = ph | size -%}
+      {%- assign idx = str_len | times: 7 | plus: ph_len | modulo: demo_photos.size -%}
+    {%- endif -%}
+    {%- assign photo_id = demo_photos[idx] -%}
+    <img loading="{{ ld }}" alt="{{ alt_text | escape }}" src="https://images.unsplash.com/{{ photo_id }}?auto=format&fit=crop&w=800&q=75" style="width:100%;height:100%;object-fit:cover;display:block">
   {%- endif -%}
 </div>

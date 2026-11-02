@@ -7,14 +7,14 @@
         {%- if c != blank -%}
           {%- assign im = block.settings.image | default: c.featured_image -%}
           <a class="ct" href="{{ c.url }}" {{ block.shopify_attributes }}>
-            {% render 'img', image: im, ratio: '600/420', placeholder: 'collection-1', sizes: '(min-width:900px) 380px, 100vw' %}
+            {% render 'img', image: im, ratio: '600/420', placeholder: 'collection-1', alt: c.title, demo_index: forloop.index, sizes: '(min-width:900px) 380px, 100vw' %}
             <div class="t"><b>{{ c.title }}</b><span>{{ c.products_count }} products →</span></div>
           </a>
         {%- else -%}
           {%- assign demo_titles = 'Acrylic Sign Holders,Acrylic Photo Frames,Hotel Supplies & Organizer,Acrylic Donation Box,Wall Mount Display Frames,Acrylic Label Holders' | split: ',' -%}
           {%- assign idx = forloop.index0 | modulo: demo_titles.size -%}
           <a class="ct" href="{{ routes.all_products_collection_url }}" {{ block.shopify_attributes }}>
-            {% render 'img', image: block.settings.image, ratio: '600/420', placeholder: 'collection-1', sizes: '(min-width:900px) 380px, 100vw' %}
+            {% render 'img', image: block.settings.image, ratio: '600/420', placeholder: 'collection-1', alt: demo_titles[idx], demo_index: forloop.index, sizes: '(min-width:900px) 380px, 100vw' %}
             <div class="t"><b>{{ demo_titles[idx] }}</b><span>Explore collection →</span></div>
           </a>
         {%- endif -%}
@@ -24,7 +24,7 @@
       {%- for handle in def_handles -%}
         {%- assign c = collections[handle] -%}
         <a class="ct" href="{{ c.url | default: '/collections/all' }}">
-          {% render 'img', image: c.featured_image, ratio: '600/420', placeholder: 'collection-1', sizes: '(min-width:900px) 380px, 100vw' %}
+          {% render 'img', image: c.featured_image, ratio: '600/420', placeholder: 'collection-1', alt: handle, demo_index: forloop.index, sizes: '(min-width:900px) 380px, 100vw' %}
           <div class="t"><b>{{ c.title | default: handle | replace: '-', ' ' | capitalize }}</b><span>{{ c.products_count | default: 8 }} products →</span></div>
         </a>
       {%- endfor -%}
