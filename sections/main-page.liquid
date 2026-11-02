@@ -1,5 +1,67 @@
-<div class="pgh"><div class="w"><div class="crumb"><a href="{{ routes.root_url }}">Home</a> / {{ page.title }}</div><h1>{{ page.title }}</h1></div></div>
-<div class="w art" style="max-width:860px;padding-bottom:20px">{{ page.content }}</div>
+{%- assign h = page.handle -%}
+{%- if h == 'about' or h == 'about-us' -%}
+  <div class="pgh"><div class="w"><div class="crumb"><a href="{{ routes.root_url }}">Home</a> / {{ page.title }}</div><h1>About DisplaysKart</h1></div></div>
+  <div class="w">
+    <div class="g2" style="margin:20px 0;align-items:center">
+      <div class="art">
+        <p>DisplaysKart is India’s trusted acrylic display store, serving retailers, hotels, offices, NGOs and exhibitions with premium acrylic sign holders, photo frames, donation boxes and risers.</p>
+        <p>We are dedicated to revolutionizing your display experience with quality, innovative solutions tailored to your unique needs.</p>
+        <a class="btn fill" href="{{ routes.root_url }}pages/contact">Talk to us</a>
+      </div>
+      <div>{% render 'img', ratio: '600/420', placeholder: 'lifestyle-1', demo_index: 3, sizes: '(min-width:900px) 580px, 100vw' %}</div>
+    </div>
+    <div class="g4" style="margin:30px 0">
+      <div class="stat bx2"><b>500+</b>Products</div>
+      <div class="stat bx2"><b>10,000+</b>Orders shipped</div>
+      <div class="stat bx2"><b>Pan-India</b>Delivery</div>
+      <div class="stat bx2"><b>5%</b>Bulk discount</div>
+    </div>
+    <div class="sh"><h2>Why choose us</h2></div>
+    <div class="g4" style="margin-bottom:40px">
+      <div class="bx2"><b>Premium Quality</b><p style="margin:6px 0 0;color:var(--mute)">Clear, durable acrylic</p></div>
+      <div class="bx2"><b>Custom Sizes</b><p style="margin:6px 0 0;color:var(--mute)">Made to your spec</p></div>
+      <div class="bx2"><b>Fast Shipping</b><p style="margin:6px 0 0;color:var(--mute)">Free above ₹1000</p></div>
+      <div class="bx2"><b>Support</b><p style="margin:6px 0 0;color:var(--mute)">Help center & sales team</p></div>
+    </div>
+  </div>
+{%- elsif h == 'applications' -%}
+  <div class="pgh"><div class="w"><div class="crumb"><a href="{{ routes.root_url }}">Home</a> / {{ page.title }}</div><h1>Industries We Serve</h1><p class="muted" style="margin:6px 0 0">Acrylic display solutions for every environment.</p></div></div>
+  <div class="w" style="margin-bottom:40px">
+    <div class="g2" style="margin:34px 0;align-items:center">
+      <div>{% render 'img', ratio: '600/380', placeholder: 'collection-1', demo_index: 4, sizes: '(min-width:900px) 580px, 100vw' %}</div>
+      <div><h2>Office Suppliers &amp; Organizer</h2><p>Name plates, label holders, brochure organizers and desk organizers for professional workspaces.</p><a class="btn fill" href="{{ routes.collections_url }}/acrylic-label-holders-signs">Shop now</a></div>
+    </div>
+    <div class="g2" style="margin:34px 0;align-items:center;direction:rtl">
+      <div>{% render 'img', ratio: '600/380', placeholder: 'collection-1', demo_index: 7, sizes: '(min-width:900px) 580px, 100vw' %}</div>
+      <div style="direction:ltr"><h2>NGO’s &amp; Government Organizations</h2><p>Transparent donation, suggestion and ballot boxes with lock and key.</p><a class="btn fill" href="{{ routes.collections_url }}/acrylic-donation-box">Shop now</a></div>
+    </div>
+    <div class="g2" style="margin:34px 0;align-items:center">
+      <div>{% render 'img', ratio: '600/380', placeholder: 'collection-1', demo_index: 12, sizes: '(min-width:900px) 580px, 100vw' %}</div>
+      <div><h2>Galleries and Museums</h2><p>Wall-mount stud frames, shadow boxes and display risers that keep the focus on the exhibit.</p><a class="btn fill" href="{{ routes.collections_url }}/acrylic-wall-mount-display-frames">Shop now</a></div>
+    </div>
+    <div class="g2" style="margin:34px 0;align-items:center;direction:rtl">
+      <div>{% render 'img', ratio: '600/380', placeholder: 'collection-1', demo_index: 15, sizes: '(min-width:900px) 580px, 100vw' %}</div>
+      <div style="direction:ltr"><h2>Retail Displays for shops</h2><p>Riser stands, purse stands, easels and sign holders to lift sales.</p><a class="btn fill" href="{{ routes.collections_url }}/exclusive-product">Shop now</a></div>
+    </div>
+    <div class="g2" style="margin:34px 0;align-items:center">
+      <div>{% render 'img', ratio: '600/380', placeholder: 'collection-1', demo_index: 2, sizes: '(min-width:900px) 580px, 100vw' %}</div>
+      <div><h2>Home Interior Photo Frames</h2><p>Magnetic and floating acrylic photo frames for homes and gifting.</p><a class="btn fill" href="{{ routes.collections_url }}/acrylic-photo-frames">Shop now</a></div>
+    </div>
+  </div>
+{%- elsif h == 'track-order' or h == 'track' -%}
+  {% section 'track-order' %}
+{%- elsif h == 'contact' or h == 'contact-us' -%}
+  {% section 'contact-form' %}
+{%- else -%}
+  <div class="pgh"><div class="w"><div class="crumb"><a href="{{ routes.root_url }}">Home</a> / {{ page.title }}</div><h1>{{ page.title }}</h1></div></div>
+  <div class="w art" style="max-width:860px;padding-bottom:20px">
+    {%- if page.content != blank -%}
+      {{ page.content }}
+    {%- else -%}
+      <p class="muted">Content coming soon.</p>
+    {%- endif -%}
+  </div>
+{%- endif -%}
 
 {% schema %}
 {
