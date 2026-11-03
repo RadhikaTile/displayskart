@@ -54,6 +54,11 @@
     <h3>Data Security</h3>
     <p>We do not sell, rent, or trade your personal information. Payment transactions are securely processed through encrypted, industry-standard payment gateways.</p>
   </div>
+{%- elsif path contains 'bulk' or path contains 'enquiry' -%}
+  {%- assign contact_url = pages['contact'].url | default: pages['contact-us'].url | default: '/pages/contact' -%}
+  <script>window.location.replace('{{ contact_url }}');</script>
+  <div class="pgh"><div class="w"><div class="crumb"><a href="{{ routes.root_url }}">Home</a> / Bulk Enquiry</div><h1>Bulk Enquiry</h1></div></div>
+  <div class="w" style="padding:40px 20px;text-align:center"><p>Redirecting to contact us page... <a class="btn fill" href="{{ contact_url }}">Click here if not redirected</a></p></div>
 {%- else -%}
   <div id="dynamic-policy-holder"></div>
   <div id="default-404-view">
@@ -69,6 +74,10 @@
   <script>
     (function() {
       var p = window.location.pathname.toLowerCase();
+      if (p.indexOf('bulk') > -1 || (p.indexOf('enquiry') > -1 && p.indexOf('contact') === -1)) {
+        window.location.replace('/pages/contact');
+        return;
+      }
       var h = document.getElementById('dynamic-policy-holder');
       var def = document.getElementById('default-404-view');
       if (!h || !def) return;

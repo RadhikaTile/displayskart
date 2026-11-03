@@ -5,7 +5,12 @@
       <h1>{{ section.settings.heading }}</h1>
       <p>{{ section.settings.text }}</p>
       {%- if section.settings.button_1_label != blank -%}<a class="btn fill" href="{{ section.settings.button_1_link | default: routes.all_products_collection_url }}">{{ section.settings.button_1_label }}</a>{%- endif -%}
-      {%- if section.settings.button_2_label != blank %} &nbsp;<a class="btn" href="{{ section.settings.button_2_link | default: routes.root_url }}">{{ section.settings.button_2_label }}</a>{%- endif -%}
+      {%- assign contact_url = pages['contact'].url | default: pages['contact-us'].url | default: '/pages/contact' -%}
+      {%- assign b2_link = section.settings.button_2_link -%}
+      {%- if b2_link == blank or b2_link == routes.root_url -%}
+        {%- assign b2_link = contact_url -%}
+      {%- endif -%}
+      {%- if section.settings.button_2_label != blank %} &nbsp;<a class="btn" href="{{ b2_link }}">{{ section.settings.button_2_label }}</a>{%- endif -%}
     </div>
     <div class="col2">
       <div class="arch">{% render 'img', image: section.settings.image_1, ratio: '420/560', placeholder: 'hero-apparel-1', loading: 'eager', sizes: '(min-width:900px) 280px, 50vw' %}</div>

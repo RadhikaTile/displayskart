@@ -349,6 +349,19 @@
     if (e.target.closest('.sopt')) saveRecent(i.value);
   });
 
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a');
+    if (!a) return;
+    var txt = (a.textContent || '').trim().toLowerCase();
+    var href = (a.getAttribute('href') || '').trim();
+    if (txt === 'bulk enquiry' || href === '/pages/bulk-enquiry' || href === '/bulk-enquiry' || href === 'pages/bulk-enquiry') {
+      if (!href || href === '#' || href === '/' || href.indexOf('bulk') > -1) {
+        e.preventDefault();
+        window.location.href = root === '/' ? '/pages/contact' : root + 'pages/contact';
+      }
+    }
+  });
+
   function init() { syncWL(); initImages(); initProduct(); initRecs(); initHome(); initReveal(); renderWL(); recent(); tick(); }
   setInterval(tick, 1000);
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();

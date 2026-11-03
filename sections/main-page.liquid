@@ -86,6 +86,11 @@
       </div>
     </div>
   </div></div>
+{%- elsif h == 'bulk-enquiry' or h == 'bulk' or h == 'enquiry' -%}
+  {%- assign contact_url = pages['contact'].url | default: pages['contact-us'].url | default: '/pages/contact' -%}
+  <script>window.location.replace('{{ contact_url }}');</script>
+  <div class="pgh"><div class="w"><div class="crumb"><a href="{{ routes.root_url }}">Home</a> / Bulk Enquiry</div><h1>Bulk Enquiry</h1></div></div>
+  <div class="w" style="padding:40px 20px;text-align:center"><p>Redirecting to contact us page... <a class="btn fill" href="{{ contact_url }}">Click here if not redirected</a></p></div>
 {%- elsif h == 'contact' or h == 'contact-us' -%}
   <div class="pgh"><div class="w"><div class="crumb"><a href="{{ routes.root_url }}">Home</a> / {{ page.title | default: 'Contact Us' }}</div><h1>{{ page.title | default: 'Contact Us' }}</h1></div></div>
   <div class="w"><div class="g2" style="align-items:start;margin-bottom:30px">
