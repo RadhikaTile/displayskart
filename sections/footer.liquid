@@ -1,51 +1,196 @@
-<footer>
+<style>
+  footer.site-footer {
+    background: var(--cream, #f3e9db);
+    border-top: none;
+    padding: 68px 0 32px;
+    font-size: 14px;
+    color: var(--ink, #2b211a);
+    margin-top: 40px;
+  }
+  .site-footer .footer-grid {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr 1.05fr 1.35fr;
+    gap: 40px 32px;
+    align-items: flex-start;
+  }
+  .site-footer .footer-logo {
+    font-family: var(--font-head, 'Playfair Display', Georgia, serif);
+    font-size: 29px;
+    font-weight: 700;
+    color: var(--ink, #2b211a);
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 14px;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+    border: none;
+    padding: 0;
+  }
+  .site-footer .footer-logo span,
+  .site-footer .footer-logo b {
+    color: inherit;
+    font-weight: inherit;
+    font-family: inherit;
+  }
+  .site-footer .footer-about {
+    font-size: 14px;
+    line-height: 1.65;
+    color: rgba(43, 33, 26, 0.85);
+    margin: 0;
+    max-width: 320px;
+  }
+  .site-footer .footer-col h4 {
+    font-family: var(--font-body, system-ui, -apple-system, sans-serif);
+    font-size: 13.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink, #2b211a);
+    margin: 0 0 18px 0;
+    line-height: 1.3;
+  }
+  .site-footer .footer-col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .site-footer .footer-col li {
+    list-style: none;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+    color: rgba(43, 33, 26, 0.85);
+  }
+  .site-footer .footer-col li a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .site-footer .footer-col li a:hover {
+    color: var(--acc, #8c4a2f);
+  }
+  .site-footer .footer-social {
+    margin-top: 12px;
+    color: rgba(43, 33, 26, 0.85);
+    font-size: 13.5px;
+  }
+  .site-footer .footer-social a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .site-footer .footer-social a:hover {
+    color: var(--acc, #8c4a2f);
+    text-decoration: underline;
+  }
+  .site-footer .footer-copy {
+    text-align: center;
+    color: var(--mute, #7d6e62);
+    border-top: none;
+    margin-top: 55px;
+    padding: 0;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  @media (max-width: 900px) {
+    .site-footer .footer-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 36px 28px;
+    }
+  }
+  @media (max-width: 600px) {
+    footer.site-footer {
+      padding: 44px 0 24px;
+    }
+    .site-footer .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    .site-footer .footer-copy {
+      margin-top: 36px;
+    }
+  }
+</style>
+
+<footer class="site-footer">
   <div class="w">
-    <div class="f">
-      <div>
-        <a class="logo" href="{{ routes.root_url }}">{{ section.settings.logo_text }}<b>{{ section.settings.logo_accent }}</b></a>
-        <p>{{ section.settings.about }}</p>
-        {%- if settings.social_facebook != blank or settings.social_twitter != blank or settings.social_youtube != blank or settings.social_linkedin != blank or settings.social_instagram != blank -%}
-        <p>
-          {%- if settings.social_facebook != blank %}<a href="{{ settings.social_facebook }}" target="_blank" rel="noopener">Facebook</a> · {% endif -%}
-          {%- if settings.social_twitter != blank %}<a href="{{ settings.social_twitter }}" target="_blank" rel="noopener">Twitter</a> · {% endif -%}
-          {%- if settings.social_youtube != blank %}<a href="{{ settings.social_youtube }}" target="_blank" rel="noopener">YouTube</a> · {% endif -%}
-          {%- if settings.social_linkedin != blank %}<a href="{{ settings.social_linkedin }}" target="_blank" rel="noopener">LinkedIn</a>{% endif -%}
-          {%- if settings.social_instagram != blank %} · <a href="{{ settings.social_instagram }}" target="_blank" rel="noopener">Instagram</a>{% endif -%}
-        </p>
-        {%- endif -%}
+    <div class="f footer-grid">
+      <div class="footer-col footer-col-brand">
+        <a class="footer-logo" href="{{ routes.root_url }}">
+          {{ section.settings.logo_text | default: 'Displays' }}<span>{{ section.settings.logo_accent | default: 'Kart' }}</span>
+        </a>
+        <p class="footer-about">{{ section.settings.about | default: "At Display Kart, we're dedicated to revolutionizing your display experience with quality, innovative solutions tailored to your unique needs." }}</p>
       </div>
-      <div><h4>{{ section.settings.menu_1_title }}</h4><ul>{% for link in linklists[section.settings.menu_1].links %}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{% endfor %}</ul></div>
-      <div>
-        <h4>{{ section.settings.menu_2_title | default: 'Our Products' }}</h4>
+
+      <div class="footer-col">
+        <h4>{{ section.settings.menu_1_title | default: 'QUICK LINKS' }}</h4>
         <ul>
-          {%- if section.settings.menu_2 != blank and linklists[section.settings.menu_2].links.size > 2 -%}
-            {% for link in linklists[section.settings.menu_2].links %}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{% endfor %}
+          {%- if section.settings.menu_1 != blank and linklists[section.settings.menu_1].links.size > 2 -%}
+            {% for link in linklists[section.settings.menu_1].links %}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {% endfor %}
           {%- else -%}
-            <li><a href="{{ routes.collections_url }}/acrylic-sign-holders">Acrylic Sign Holders</a></li>
-            <li><a href="{{ routes.collections_url }}/acrylic-photo-frames">Acrylic Photo Frames</a></li>
-            <li><a href="{{ routes.collections_url }}/hotel-supplies-organizer">Hotel Supplies & Organizer</a></li>
-            <li><a href="{{ routes.collections_url }}/acrylic-donation-box">Acrylic Donation Box</a></li>
-            <li><a href="{{ routes.collections_url }}/acrylic-wall-mount-display-frames">Wall Mount Display Frames</a></li>
-            <li><a href="{{ routes.collections_url }}/acrylic-sheets-accessories">Acrylic Sheets & Accessories</a></li>
-            <li><a href="{{ routes.collections_url }}/retail-displays-for-shops">Retail Displays for Shops</a></li>
-            <li><a href="{{ routes.all_products_collection_url }}">All Products & Categories →</a></li>
+            <li><a href="{{ routes.all_products_collection_url }}">Shop</a></li>
+            <li><a href="{{ routes.root_url }}pages/about-us">About Us</a></li>
+            <li><a href="{{ routes.root_url }}blogs/news">Blog</a></li>
+            <li><a href="{{ routes.root_url }}policies/privacy-policy">Privacy Policy</a></li>
+            <li><a href="{{ routes.root_url }}policies/terms-of-service">Terms &amp; Conditions</a></li>
+            <li><a href="{{ routes.root_url }}policies/refund-policy">Refund &amp; Return Policy</a></li>
+            <li><a href="{{ routes.root_url }}policies/shipping-policy">Shipping &amp; Delivery Policy</a></li>
+            <li><a href="{{ routes.root_url }}pages/track-order">Track Orders</a></li>
           {%- endif -%}
         </ul>
       </div>
-      <div>
-        <h4>Contact Us</h4>
+
+      <div class="footer-col">
+        <h4>{{ section.settings.menu_2_title | default: 'OUR PRODUCTS' }}</h4>
         <ul>
-          {%- if section.settings.business_name != blank -%}<li>{{ section.settings.business_name }}</li>{%- endif -%}
-          {%- if section.settings.address != blank -%}<li>{{ section.settings.address }}</li>{%- endif -%}
-          {%- if section.settings.email_1 != blank -%}<li><a href="mailto:{{ section.settings.email_1 }}">{{ section.settings.email_1 }}</a></li>{%- endif -%}
-          {%- if section.settings.email_2 != blank -%}<li><a href="mailto:{{ section.settings.email_2 }}">{{ section.settings.email_2 }}</a></li>{%- endif -%}
-          {%- if section.settings.phone != blank -%}<li><a href="tel:{{ section.settings.phone | remove: ' ' }}">{{ section.settings.phone }}</a></li>{%- endif -%}
+          {%- if section.settings.menu_2 != blank and linklists[section.settings.menu_2].links.size > 2 -%}
+            {% for link in linklists[section.settings.menu_2].links %}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {% endfor %}
+          {%- else -%}
+            <li><a href="{{ routes.collections_url }}/acrylic-sign-holders">Acrylic Sign Holders</a></li>
+            <li><a href="{{ routes.collections_url }}/hotel-supplies-organizer">Hotel Supplies & Organizer</a></li>
+            <li><a href="{{ routes.collections_url }}/exclusive-products">Exclusive Products</a></li>
+            <li><a href="{{ routes.collections_url }}/featured-products">Featured Products</a></li>
+            <li><a href="{{ routes.all_products_collection_url }}">More Products</a></li>
+          {%- endif -%}
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>{{ section.settings.contact_title | default: 'CONTACT US' }}</h4>
+        <ul>
+          {%- if section.settings.business_name != blank -%}
+            <li>{{ section.settings.business_name }}</li>
+          {%- endif -%}
+          {%- if section.settings.address != blank -%}
+            <li>{{ section.settings.address }}</li>
+          {%- endif -%}
+          {%- if section.settings.email_1 != blank -%}
+            <li><a href="mailto:{{ section.settings.email_1 }}">{{ section.settings.email_1 }}</a></li>
+          {%- endif -%}
+          {%- if section.settings.email_2 != blank -%}
+            <li><a href="mailto:{{ section.settings.email_2 }}">{{ section.settings.email_2 }}</a></li>
+          {%- endif -%}
+          {%- if section.settings.phone != blank -%}
+            <li><a href="tel:{{ section.settings.phone | remove: ' ' }}">{{ section.settings.phone }}</a></li>
+          {%- endif -%}
+          <li class="footer-social">
+            <a href="{{ settings.social_facebook | default: 'https://facebook.com' }}" target="_blank" rel="noopener">Facebook</a> · 
+            <a href="{{ settings.social_twitter | default: 'https://twitter.com' }}" target="_blank" rel="noopener">Twitter</a> · 
+            <a href="{{ settings.social_youtube | default: 'https://youtube.com' }}" target="_blank" rel="noopener">YouTube</a> · 
+            <a href="{{ settings.social_linkedin | default: 'https://linkedin.com' }}" target="_blank" rel="noopener">LinkedIn</a>
+          </li>
         </ul>
       </div>
     </div>
-    <div class="copy">© {{ 'now' | date: '%Y' }} {{ shop.name }}
-      {%- if shop.enabled_payment_types.size > 0 -%}
-        <div style="margin-top:8px">{% for type in shop.enabled_payment_types %}{{ type | payment_type_svg_tag: class: 'icon' }} {% endfor %}</div>
+
+    <div class="copy footer-copy">
+      {{ section.settings.copyright_text | default: '© Copyright DisplaysKart' }}
+      {%- if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
+        <div style="margin-top:12px">{% for type in shop.enabled_payment_types %}{{ type | payment_type_svg_tag: class: 'icon' }} {% endfor %}</div>
       {%- endif -%}
     </div>
   </div>
@@ -71,13 +216,13 @@
       "type": "textarea",
       "id": "about",
       "label": "About text",
-      "default": "At Display Kart, we’re dedicated to revolutionizing your display experience with quality, innovative solutions tailored to your unique needs."
+      "default": "At Display Kart, we're dedicated to revolutionizing your display experience with quality, innovative solutions tailored to your unique needs."
     },
     {
       "type": "text",
       "id": "menu_1_title",
       "label": "Column 2 title",
-      "default": "Quick Links"
+      "default": "QUICK LINKS"
     },
     {
       "type": "link_list",
@@ -89,12 +234,18 @@
       "type": "text",
       "id": "menu_2_title",
       "label": "Column 3 title",
-      "default": "Our Products"
+      "default": "OUR PRODUCTS"
     },
     {
       "type": "link_list",
       "id": "menu_2",
       "label": "Column 3 menu"
+    },
+    {
+      "type": "text",
+      "id": "contact_title",
+      "label": "Column 4 title",
+      "default": "CONTACT US"
     },
     {
       "type": "text",
@@ -125,6 +276,18 @@
       "id": "phone",
       "label": "Phone",
       "default": "+91 79000 54449"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Copyright text",
+      "default": "© Copyright DisplaysKart"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons",
+      "default": false
     }
   ]
 }

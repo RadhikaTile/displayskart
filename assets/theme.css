@@ -52,7 +52,7 @@ table{width:100%;border-collapse:collapse}td,th{border:1px solid var(--line);pad
 .stat{text-align:center}.stat b{font-size:32px;display:block}
 footer{background:var(--card);border-top:1px solid var(--line);padding:36px 0 14px;font-size:13px;margin-top:30px}
 footer .f{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.3fr;gap:30px}footer h4{margin:0 0 10px;text-transform:uppercase;letter-spacing:.07em}footer ul{padding:0;margin:0}footer li{list-style:none;margin-bottom:5px}
-.copy{text-align:center;color:var(--mute);border-top:1px solid var(--line);margin-top:26px;padding-top:12px;font-size:12px}
+.copy{text-align:center;color:var(--mute);border-top:0;margin-top:40px;padding-top:0;font-size:13px}
 #toast{position:fixed;bottom:22px;right:22px;background:var(--acc);color:var(--bg);padding:12px 18px;display:none;z-index:99;font-size:14px}
 @media(max-width:900px){.g2,.g3,.pd,.shop,footer .f{grid-template-columns:1fr}.g5{grid-template-columns:repeat(2,1fr)}.g4{grid-template-columns:repeat(2,1fr)}.usp{grid-template-columns:1fr 1fr}.hd{flex-wrap:wrap}.search{order:3;flex-basis:100%}.hero .t{padding:0 20px}.hero h1{font-size:24px}}
 

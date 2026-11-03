@@ -5,8 +5,21 @@
     "footer": {
       "type": "footer",
       "settings": {
+        "logo_text": "Displays",
+        "logo_accent": "Kart",
+        "about": "At Display Kart, we're dedicated to revolutionizing your display experience with quality, innovative solutions tailored to your unique needs.",
+        "menu_1_title": "QUICK LINKS",
         "menu_1": "footer",
-        "menu_2": "footer-products"
+        "menu_2_title": "OUR PRODUCTS",
+        "menu_2": "footer-products",
+        "contact_title": "CONTACT US",
+        "business_name": "Displayskart",
+        "address": "Behind Bajaj Show room, 6th Main Road HVR Layout, Kamakshi Palya – 560079, Bangaluru",
+        "email_1": "sales@displayskart.com",
+        "email_2": "support@displayskart.com",
+        "phone": "+91 79000 54449",
+        "copyright_text": "© Copyright DisplaysKart",
+        "show_payment_icons": false
       }
     }
   },
