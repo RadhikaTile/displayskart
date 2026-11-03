@@ -125,8 +125,9 @@
       <div class="footer-col">
         <h4>{{ section.settings.menu_1_title | default: 'QUICK LINKS' }}</h4>
         <ul>
-          {%- if section.settings.menu_1 != blank and linklists[section.settings.menu_1].links.size > 2 -%}
-            {% for link in linklists[section.settings.menu_1].links %}
+          {%- assign qlinks = linklists[section.settings.menu_1].links -%}
+          {%- if section.settings.menu_1 != blank and section.settings.menu_1 != 'footer' and qlinks.size >= 4 -%}
+            {% for link in qlinks %}
               <li><a href="{{ link.url }}">{{ link.title }}</a></li>
             {% endfor %}
           {%- else -%}
@@ -145,8 +146,9 @@
       <div class="footer-col">
         <h4>{{ section.settings.menu_2_title | default: 'OUR PRODUCTS' }}</h4>
         <ul>
-          {%- if section.settings.menu_2 != blank and linklists[section.settings.menu_2].links.size > 2 -%}
-            {% for link in linklists[section.settings.menu_2].links %}
+          {%- assign plinks = linklists[section.settings.menu_2].links -%}
+          {%- if section.settings.menu_2 != blank and section.settings.menu_2 != 'footer-products' and plinks.size >= 4 -%}
+            {% for link in plinks %}
               <li><a href="{{ link.url }}">{{ link.title }}</a></li>
             {% endfor %}
           {%- else -%}
