@@ -1,5 +1,121 @@
-<div class="w" style="text-align:center;padding:70px 20px 30px"><h1 style="font-size:72px;margin:0">404</h1><h2 style="margin:6px 0">Page not found</h2><p class="muted">The page you’re looking for doesn’t exist or has moved.</p><a class="btn fill" href="{{ routes.all_products_collection_url }}">Continue shopping</a> &nbsp;<a class="btn" href="{{ routes.root_url }}">Back to home</a></div>
-<section><div class="w"><div class="sh"><h2>You might like</h2></div><div class="g4">{%- for product in collections.all.products limit: 4 -%}{% render 'product-card', product: product %}{%- endfor -%}</div></div></section>
+{%- assign path = request.path | downcase -%}
+{%- if path contains 'term' -%}
+  <div class="pgh"><div class="w"><div class="crumb"><a href="{{ routes.root_url }}">Home</a> / Terms &amp; Conditions</div><h1>Terms &amp; Conditions</h1></div></div>
+  <div class="w art" style="max-width:860px;padding:24px 20px 60px">
+    <h2>Terms &amp; Conditions</h2>
+    <p>Welcome to <b>DisplaysKart</b> (operated at Behind Bajaj Show room, 6th Main Road HVR Layout, Kamakshi Palya – 560079, Bangaluru). By accessing our website or placing an order, you agree to the following terms and conditions.</p>
+    <h3>1. Products &amp; Pricing</h3>
+    <p>All prices listed on DisplaysKart are in Indian Rupees (INR) and inclusive of applicable GST unless specified otherwise. We specialize in premium acrylic products including sign holders, brochure stands, donation boxes, photo frames, and custom displays.</p>
+    <h3>2. Orders &amp; Bulk Enquiries</h3>
+    <p>Orders are confirmed upon successful payment verification. For bulk or wholesale orders, custom quotations and delivery timelines will be provided by our sales team.</p>
+    <h3>3. Shipping &amp; Delivery</h3>
+    <p>We deliver across India. Dispatch typically occurs within 24 to 48 business hours. Orders above ₹1000 qualify for free standard shipping.</p>
+    <h3>4. Contact &amp; Support</h3>
+    <p>For any questions regarding your order or these terms, please contact us at <b>sales@displayskart.com</b> or call <b>+91 79000 54449</b>.</p>
+  </div>
+{%- elsif path contains 'refund' or path contains 'return' -%}
+  <div class="pgh"><div class="w"><div class="crumb"><a href="{{ routes.root_url }}">Home</a> / Refund &amp; Return Policy</div><h1>Refund &amp; Return Policy</h1></div></div>
+  <div class="w art" style="max-width:860px;padding:24px 20px 60px">
+    <h2>Refund &amp; Return Policy</h2>
+    <p>At <b>DisplaysKart</b>, customer satisfaction and product quality are our highest priorities. All our acrylic products are thoroughly inspected before dispatch.</p>
+    <h3>1. Damaged or Defective Items in Transit</h3>
+    <p>Because acrylic products are fragile, please inspect your package upon delivery. If your item arrives broken, cracked, or defective, report it within <b>7 days of delivery</b> by emailing <b>support@displayskart.com</b> or contacting <b>+91 79000 54449</b> with your order number and photos/video of the packaging and damage.</p>
+    <h3>2. Replacements</h3>
+    <p>Once verified, we will arrange a free replacement of the damaged items immediately at no additional cost to you.</p>
+    <h3>3. Refunds</h3>
+    <p>If a replacement is unavailable, a full refund will be processed back to your original payment method within 5 to 7 business days.</p>
+    <h3>4. Non-Returnable Items</h3>
+    <p>Custom-fabricated acrylic products, customized branding, or personalized display units cannot be returned unless they arrive damaged or defective.</p>
+  </div>
+{%- elsif path contains 'shipping' or path contains 'delivery' -%}
+  <div class="pgh"><div class="w"><div class="crumb"><a href="{{ routes.root_url }}">Home</a> / Shipping &amp; Delivery Policy</div><h1>Shipping &amp; Delivery Policy</h1></div></div>
+  <div class="w art" style="max-width:860px;padding:24px 20px 60px">
+    <h2>Shipping &amp; Delivery Policy</h2>
+    <p>At <b>DisplaysKart</b>, we ensure safe, secure, and fast delivery of your acrylic display products across India.</p>
+    <h3>1. Delivery Coverage</h3>
+    <p>We ship to all serviceable pin codes across India through trusted courier partners including Delhivery, Blue Dart, and India Post.</p>
+    <h3>2. Shipping Charges</h3>
+    <p>We offer <b>Free Shipping on all orders above ₹1,000</b>. For orders below ₹1,000, standard shipping rates apply at checkout.</p>
+    <h3>3. Dispatch &amp; Delivery Timelines</h3>
+    <ul>
+      <li><b>Dispatch Time:</b> Standard orders are dispatched within 24–48 hours from our Bengaluru warehouse.</li>
+      <li><b>Delivery Time:</b> Metro cities typically receive deliveries within 2–4 business days; other regions within 4–7 business days.</li>
+    </ul>
+    <h3>4. Order Tracking</h3>
+    <p>Once your order is dispatched, you will receive an email and SMS with the courier tracking number (AWB) to track your shipment in real time.</p>
+  </div>
+{%- elsif path contains 'privacy' -%}
+  <div class="pgh"><div class="w"><div class="crumb"><a href="{{ routes.root_url }}">Home</a> / Privacy Policy</div><h1>Privacy Policy</h1></div></div>
+  <div class="w art" style="max-width:860px;padding:24px 20px 60px">
+    <h2>Privacy Policy</h2>
+    <p><b>DisplaysKart</b> is committed to protecting your personal information. This Privacy Policy outlines how we collect, use, and safeguard your details.</p>
+    <h3>Information We Collect</h3>
+    <p>We collect essential information to process your orders, such as your name, shipping address, email address, and phone number.</p>
+    <h3>Data Security</h3>
+    <p>We do not sell, rent, or trade your personal information. Payment transactions are securely processed through encrypted, industry-standard payment gateways.</p>
+  </div>
+{%- else -%}
+  <div id="dynamic-policy-holder"></div>
+  <div id="default-404-view">
+    <div class="w" style="text-align:center;padding:70px 20px 30px">
+      <h1 style="font-size:72px;margin:0">404</h1>
+      <h2 style="margin:6px 0">Page not found</h2>
+      <p class="muted">The page you’re looking for doesn’t exist or has moved.</p>
+      <a class="btn fill" href="{{ routes.all_products_collection_url }}">Continue shopping</a> &nbsp;<a class="btn" href="{{ routes.root_url }}">Back to home</a>
+    </div>
+    <section><div class="w"><div class="sh"><h2>You might like</h2></div><div class="g4">{%- for product in collections.all.products limit: 4 -%}{% render 'product-card', product: product %}{%- endfor -%}</div></div></section>
+  </div>
+
+  <script>
+    (function() {
+      var p = window.location.pathname.toLowerCase();
+      var h = document.getElementById('dynamic-policy-holder');
+      var def = document.getElementById('default-404-view');
+      if (!h || !def) return;
+
+      var content = '';
+      var title = '';
+
+      if (p.indexOf('term') > -1) {
+        title = 'Terms & Conditions';
+        content = '<h2>Terms & Conditions</h2>' +
+          '<p>Welcome to <b>DisplaysKart</b> (operated at Behind Bajaj Show room, 6th Main Road HVR Layout, Kamakshi Palya – 560079, Bangaluru). By accessing our website or placing an order, you agree to the following terms and conditions.</p>' +
+          '<h3>1. Products & Pricing</h3><p>All prices listed on DisplaysKart are in Indian Rupees (INR) and inclusive of applicable GST unless specified otherwise. We specialize in premium acrylic products including sign holders, brochure stands, donation boxes, photo frames, and custom displays.</p>' +
+          '<h3>2. Orders & Bulk Enquiries</h3><p>Orders are confirmed upon successful payment verification. For bulk or wholesale orders, custom quotations and delivery timelines will be provided by our sales team.</p>' +
+          '<h3>3. Shipping & Delivery</h3><p>We deliver across India. Dispatch typically occurs within 24 to 48 business hours. Orders above ₹1000 qualify for free standard shipping.</p>' +
+          '<h3>4. Contact & Support</h3><p>For any questions regarding your order or these terms, please contact us at <b>sales@displayskart.com</b> or call <b>+91 79000 54449</b>.</p>';
+      } else if (p.indexOf('refund') > -1 || p.indexOf('return') > -1) {
+        title = 'Refund & Return Policy';
+        content = '<h2>Refund & Return Policy</h2>' +
+          '<p>At <b>DisplaysKart</b>, customer satisfaction and product quality are our highest priorities. All our acrylic products are thoroughly inspected before dispatch.</p>' +
+          '<h3>1. Damaged or Defective Items in Transit</h3><p>Because acrylic products are fragile, please inspect your package upon delivery. If your item arrives broken, cracked, or defective, report it within <b>7 days of delivery</b> by emailing <b>support@displayskart.com</b> or contacting <b>+91 79000 54449</b> with your order number and photos/video of the packaging and damage.</p>' +
+          '<h3>2. Replacements</h3><p>Once verified, we will arrange a free replacement of the damaged items immediately at no additional cost to you.</p>' +
+          '<h3>3. Refunds</h3><p>If a replacement is unavailable, a full refund will be processed back to your original payment method within 5 to 7 business days.</p>' +
+          '<h3>4. Non-Returnable Items</h3><p>Custom-fabricated acrylic products, customized branding, or personalized display units cannot be returned unless they arrive damaged or defective.</p>';
+      } else if (p.indexOf('shipping') > -1 || p.indexOf('delivery') > -1) {
+        title = 'Shipping & Delivery Policy';
+        content = '<h2>Shipping & Delivery Policy</h2>' +
+          '<p>At <b>DisplaysKart</b>, we ensure safe, secure, and fast delivery of your acrylic display products across India.</p>' +
+          '<h3>1. Delivery Coverage</h3><p>We ship to all serviceable pin codes across India through trusted courier partners including Delhivery, Blue Dart, and India Post.</p>' +
+          '<h3>2. Shipping Charges</h3><p>We offer <b>Free Shipping on all orders above ₹1,000</b>. For orders below ₹1,000, standard shipping rates apply at checkout.</p>' +
+          '<h3>3. Dispatch & Delivery Timelines</h3><ul><li><b>Dispatch Time:</b> Standard orders are dispatched within 24–48 hours from our Bengaluru warehouse.</li><li><b>Delivery Time:</b> Metro cities typically receive deliveries within 2–4 business days; other regions within 4–7 business days.</li></ul>' +
+          '<h3>4. Order Tracking</h3><p>Once your order is dispatched, you will receive an email and SMS with the courier tracking number (AWB) to track your shipment in real time.</p>';
+      } else if (p.indexOf('privacy') > -1) {
+        title = 'Privacy Policy';
+        content = '<h2>Privacy Policy</h2>' +
+          '<p><b>DisplaysKart</b> is committed to protecting your personal information. This Privacy Policy outlines how we collect, use, and safeguard your details.</p>' +
+          '<h3>Information We Collect</h3><p>We collect essential information to process your orders, such as your name, shipping address, email address, and phone number.</p>' +
+          '<h3>Data Security</h3><p>We do not sell, rent, or trade your personal information. Payment transactions are securely processed through encrypted, industry-standard payment gateways.</p>';
+      }
+
+      if (content) {
+        def.style.display = 'none';
+        document.title = title + ' – DisplaysKart';
+        h.innerHTML = '<div class="pgh"><div class="w"><div class="crumb"><a href="/">Home</a> / ' + title + '</div><h1>' + title + '</h1></div></div><div class="w art" style="max-width:860px;padding:24px 20px 60px">' + content + '</div>';
+      }
+    })();
+  </script>
+{%- endif -%}
 
 {% schema %}
 {

@@ -155,10 +155,10 @@
             <li><a href="{{ routes.all_products_collection_url }}">Shop</a></li>
             <li><a href="{{ about_url }}">About Us</a></li>
             <li><a href="{{ blogs['news'].url | default: '/blogs/news' }}">Blog</a></li>
-            <li><a href="{{ privacy_url }}">Privacy Policy</a></li>
-            <li><a href="{{ terms_url }}">Terms &amp; Conditions</a></li>
-            <li><a href="{{ refund_url }}">Refund &amp; Return Policy</a></li>
-            <li><a href="{{ shipping_url }}">Shipping &amp; Delivery Policy</a></li>
+            <li><a href="{{ privacy_url }}" data-policy-modal="privacy">Privacy Policy</a></li>
+            <li><a href="{{ terms_url }}" data-policy-modal="terms">Terms &amp; Conditions</a></li>
+            <li><a href="{{ refund_url }}" data-policy-modal="refund">Refund &amp; Return Policy</a></li>
+            <li><a href="{{ shipping_url }}" data-policy-modal="shipping">Shipping &amp; Delivery Policy</a></li>
             <li><a href="{{ track_url }}">Track Orders</a></li>
           {%- endif -%}
         </ul>
@@ -218,6 +218,55 @@
     </div>
   </div>
 </footer>
+
+<script>
+  (function() {
+    var policies = {
+      'terms': {
+        title: 'Terms & Conditions',
+        body: '<h3>1. Products &amp; Pricing</h3><p>All prices listed on DisplaysKart are in Indian Rupees (INR) and inclusive of applicable GST unless specified otherwise. We specialize in premium acrylic products including sign holders, brochure stands, donation boxes, photo frames, and custom displays.</p><h3>2. Orders &amp; Bulk Enquiries</h3><p>Orders are confirmed upon successful payment verification. For bulk or wholesale orders, custom quotations and delivery timelines will be provided by our sales team.</p><h3>3. Shipping &amp; Delivery</h3><p>We deliver across India. Dispatch typically occurs within 24 to 48 business hours. Orders above ₹1000 qualify for free standard shipping.</p><h3>4. Contact &amp; Support</h3><p>For any questions regarding your order or these terms, please contact us at <b>sales@displayskart.com</b> or call <b>+91 79000 54449</b>.</p>'
+      },
+      'refund': {
+        title: 'Refund & Return Policy',
+        body: '<h3>1. Damaged or Defective Items in Transit</h3><p>Because acrylic products are fragile, please inspect your package upon delivery. If your item arrives broken, cracked, or defective, report it within <b>7 days of delivery</b> by emailing <b>support@displayskart.com</b> or contacting <b>+91 79000 54449</b> with your order number and photos/video of the packaging and damage.</p><h3>2. Replacements</h3><p>Once verified, we will arrange a free replacement of the damaged items immediately at no additional cost to you.</p><h3>3. Refunds</h3><p>If a replacement is unavailable, a full refund will be processed back to your original payment method within 5 to 7 business days.</p><h3>4. Non-Returnable Items</h3><p>Custom-fabricated acrylic products, customized branding, or personalized display units cannot be returned unless they arrive damaged or defective.</p>'
+      },
+      'shipping': {
+        title: 'Shipping & Delivery Policy',
+        body: '<h3>1. Delivery Coverage</h3><p>We ship to all serviceable pin codes across India through trusted courier partners including Delhivery, Blue Dart, and India Post.</p><h3>2. Shipping Charges</h3><p>We offer <b>Free Shipping on all orders above ₹1,000</b>. For orders below ₹1,000, standard shipping rates apply at checkout.</p><h3>3. Dispatch &amp; Delivery Timelines</h3><ul><li><b>Dispatch Time:</b> Standard orders are dispatched within 24–48 hours from our Bengaluru warehouse.</li><li><b>Delivery Time:</b> Metro cities typically receive deliveries within 2–4 business days; other regions within 4–7 business days.</li></ul><h3>4. Order Tracking</h3><p>Once your order is dispatched, you will receive an email and SMS with the courier tracking number (AWB) to track your shipment in real time.</p>'
+      },
+      'privacy': {
+        title: 'Privacy Policy',
+        body: '<h3>Information We Collect</h3><p>We collect essential information to process your orders, such as your name, shipping address, email address, and phone number.</p><h3>Data Security</h3><p>We do not sell, rent, or trade your personal information. Payment transactions are securely processed through encrypted, industry-standard payment gateways.</p>'
+      }
+    };
+
+    document.addEventListener('click', function(e) {
+      var t = e.target.closest('[data-policy-modal]');
+      if (!t) return;
+      var key = t.getAttribute('data-policy-modal');
+      var item = policies[key];
+      if (!item) return;
+      e.preventDefault();
+      var qc = document.getElementById('qc');
+      var qm = document.getElementById('qm');
+      var ov = document.getElementById('ov');
+      if (qc && qm && ov) {
+        qc.style.maxWidth = '720px';
+        qc.style.display = 'block';
+        qc.style.maxHeight = '85vh';
+        qc.style.overflowY = 'auto';
+        qc.innerHTML = '<button type="button" class="xq" data-close aria-label="Close" style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:24px;cursor:pointer">×</button>' +
+          '<h2 style="margin-top:0;font-size:24px">' + item.title + '</h2>' +
+          '<div class="art" style="font-size:14px;line-height:1.6">' + item.body + '</div>';
+        qm.classList.add('on');
+        ov.classList.add('on');
+        document.body.classList.add('noscroll');
+      } else {
+        window.location.href = t.getAttribute('href');
+      }
+    });
+  })();
+</script>
 
 {% schema %}
 {
