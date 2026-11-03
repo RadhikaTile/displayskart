@@ -59,6 +59,22 @@
   <script>window.location.replace('{{ contact_url }}');</script>
   <div class="pgh"><div class="w"><div class="crumb"><a href="{{ routes.root_url }}">Home</a> / Bulk Enquiry</div><h1>Bulk Enquiry</h1></div></div>
   <div class="w" style="padding:40px 20px;text-align:center"><p>Redirecting to contact us page... <a class="btn fill" href="{{ contact_url }}">Click here if not redirected</a></p></div>
+{%- elsif path contains '/collections/' -%}
+  {%- assign hnd = path | split: '/collections/' | last | split: '?' | first | split: '/' | first -%}
+  {%- assign col_title = hnd | replace: '-', ' ' | capitalize -%}
+  <div class="pgh">
+    <div class="w">
+      <div class="crumb"><a href="{{ routes.root_url }}">Home</a> / <a href="{{ routes.all_products_collection_url }}">Shop</a> / {{ col_title }}</div>
+      <h1>{{ col_title }}</h1>
+    </div>
+  </div>
+  <div class="w" style="padding:20px 20px 60px">
+    <div class="g4">
+      {%- for product in collections.all.products limit: 16 -%}
+        {% render 'product-card', product: product %}
+      {%- endfor -%}
+    </div>
+  </div>
 {%- else -%}
   <div id="dynamic-policy-holder"></div>
   <div id="default-404-view">
@@ -77,6 +93,13 @@
       if (p.indexOf('bulk') > -1 || (p.indexOf('enquiry') > -1 && p.indexOf('contact') === -1)) {
         window.location.replace('/pages/contact');
         return;
+      }
+      if (p.indexOf('/collections/') > -1) {
+        var hnd = p.split('/collections/')[1].split('?')[0].split('/')[0];
+        if (hnd && hnd !== 'all') {
+          window.location.replace('/collections/all');
+          return;
+        }
       }
       var h = document.getElementById('dynamic-policy-holder');
       var def = document.getElementById('default-404-view');

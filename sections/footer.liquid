@@ -173,10 +173,22 @@
               <li><a href="{{ link.url }}">{{ link.title }}</a></li>
             {% endfor %}
           {%- else -%}
-            <li><a href="{{ routes.collections_url }}/acrylic-sign-holders">Acrylic Sign Holders</a></li>
-            <li><a href="{{ routes.collections_url }}/hotel-supplies-organizer">Hotel Supplies & Organizer</a></li>
-            <li><a href="{{ routes.collections_url }}/exclusive-products">Exclusive Products</a></li>
-            <li><a href="{{ routes.collections_url }}/featured-products">Featured Products</a></li>
+            {%- assign col_signs = collections['acrylic-sign-holders'].url | default: collections['sign-holders'].url -%}
+            {%- if col_signs == blank -%}{%- assign col_signs = routes.all_products_collection_url -%}{%- endif -%}
+
+            {%- assign col_hotel = collections['hotel-supplies-organizer'].url | default: collections['hotel-supplies'].url -%}
+            {%- if col_hotel == blank -%}{%- assign col_hotel = routes.all_products_collection_url -%}{%- endif -%}
+
+            {%- assign col_exclusive = collections['exclusive-products'].url | default: collections['exclusive-product'].url -%}
+            {%- if col_exclusive == blank -%}{%- assign col_exclusive = routes.all_products_collection_url -%}{%- endif -%}
+
+            {%- assign col_featured = collections['featured-products'].url | default: collections['featured'].url -%}
+            {%- if col_featured == blank -%}{%- assign col_featured = routes.all_products_collection_url -%}{%- endif -%}
+
+            <li><a href="{{ col_signs }}">Acrylic Sign Holders</a></li>
+            <li><a href="{{ col_hotel }}">Hotel Supplies & Organizer</a></li>
+            <li><a href="{{ col_exclusive }}">Exclusive Products</a></li>
+            <li><a href="{{ col_featured }}">Featured Products</a></li>
             <li><a href="{{ routes.all_products_collection_url }}">More Products</a></li>
           {%- endif -%}
         </ul>
