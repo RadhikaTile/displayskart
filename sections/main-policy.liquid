@@ -1,0 +1,67 @@
+<div class="pgh">
+  <div class="w">
+    <div class="crumb"><a href="{{ routes.root_url }}">Home</a> / {{ policy.title }}</div>
+    <h1>{{ policy.title }}</h1>
+  </div>
+</div>
+
+<div class="w art" style="max-width:860px;padding:24px 20px 60px">
+  {%- if policy.body != blank -%}
+    {{ policy.body }}
+  {%- else -%}
+    {%- assign t = policy.title | downcase -%}
+    {%- if t contains 'terms' -%}
+      <h2>Terms &amp; Conditions</h2>
+      <p>Welcome to <b>DisplaysKart</b> (operated at Behind Bajaj Show room, 6th Main Road HVR Layout, Kamakshi Palya – 560079, Bangaluru). By accessing our website or placing an order, you agree to the following terms and conditions.</p>
+      <h3>1. Products &amp; Pricing</h3>
+      <p>All prices listed on DisplaysKart are in Indian Rupees (INR) and inclusive of applicable GST unless specified otherwise. We specialize in premium acrylic products including sign holders, brochure stands, donation boxes, photo frames, and custom displays.</p>
+      <h3>2. Orders &amp; Bulk Enquiries</h3>
+      <p>Orders are confirmed upon successful payment verification. For bulk or wholesale orders, custom quotations and delivery timelines will be provided by our sales team.</p>
+      <h3>3. Shipping &amp; Delivery</h3>
+      <p>We deliver across India. Dispatch typically occurs within 24 to 48 business hours. Orders above ₹1000 qualify for free standard shipping.</p>
+      <h3>4. Contact &amp; Support</h3>
+      <p>For any questions regarding your order or these terms, please contact us at <b>sales@displayskart.com</b> or call <b>+91 79000 54449</b>.</p>
+    {%- elsif t contains 'refund' or t contains 'return' -%}
+      <h2>Refund &amp; Return Policy</h2>
+      <p>At <b>DisplaysKart</b>, customer satisfaction and product quality are our highest priorities. All our acrylic products are thoroughly inspected before dispatch.</p>
+      <h3>1. Damaged or Defective Items in Transit</h3>
+      <p>Because acrylic products are fragile, please inspect your package upon delivery. If your item arrives broken, cracked, or defective, report it within <b>7 days of delivery</b> by emailing <b>support@displayskart.com</b> or contacting <b>+91 79000 54449</b> with your order number and photos/video of the packaging and damage.</p>
+      <h3>2. Replacements</h3>
+      <p>Once verified, we will arrange a free replacement of the damaged items immediately at no additional cost to you.</p>
+      <h3>3. Refunds</h3>
+      <p>If a replacement is unavailable, a full refund will be processed back to your original payment method within 5 to 7 business days.</p>
+      <h3>4. Non-Returnable Items</h3>
+      <p>Custom-fabricated acrylic products, customized branding, or personalized display units cannot be returned unless they arrive damaged or defective.</p>
+    {%- elsif t contains 'shipping' or t contains 'delivery' -%}
+      <h2>Shipping &amp; Delivery Policy</h2>
+      <p>At <b>DisplaysKart</b>, we ensure safe, secure, and fast delivery of your acrylic display products across India.</p>
+      <h3>1. Delivery Coverage</h3>
+      <p>We ship to all serviceable pin codes across India through trusted courier partners including Delhivery, Blue Dart, and India Post.</p>
+      <h3>2. Shipping Charges</h3>
+      <p>We offer <b>Free Shipping on all orders above ₹1,000</b>. For orders below ₹1,000, standard shipping rates apply at checkout.</p>
+      <h3>3. Dispatch &amp; Delivery Timelines</h3>
+      <ul>
+        <li><b>Dispatch Time:</b> Standard orders are dispatched within 24–48 hours from our Bengaluru warehouse.</li>
+        <li><b>Delivery Time:</b> Metro cities typically receive deliveries within 2–4 business days; other regions within 4–7 business days.</li>
+      </ul>
+      <h3>4. Order Tracking</h3>
+      <p>Once your order is dispatched, you will receive an email and SMS with the courier tracking number (AWB) to track your shipment in real time.</p>
+    {%- elsif t contains 'privacy' -%}
+      <h2>Privacy Policy</h2>
+      <p><b>DisplaysKart</b> is committed to protecting your personal information. This Privacy Policy outlines how we collect, use, and safeguard your details.</p>
+      <h3>Information We Collect</h3>
+      <p>We collect essential information to process your orders, such as your name, shipping address, email address, and phone number.</p>
+      <h3>Data Security</h3>
+      <p>We do not sell, rent, or trade your personal information. Payment transactions are securely processed through encrypted, industry-standard payment gateways.</p>
+    {%- else -%}
+      <p class="muted">Policy content is being updated. Please contact support@displayskart.com for assistance.</p>
+    {%- endif -%}
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Policy",
+  "settings": []
+}
+{% endschema %}

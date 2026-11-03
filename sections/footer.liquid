@@ -131,14 +131,35 @@
               <li><a href="{{ link.url }}">{{ link.title }}</a></li>
             {% endfor %}
           {%- else -%}
+            {%- assign root = routes.root_url -%}
+            {%- if root == '/' -%}{%- assign root = '' -%}{%- endif -%}
+
+            {%- assign terms_url = shop.terms_of_service.url | default: pages['terms-and-conditions'].url | default: pages['terms-conditions'].url | default: pages['terms-of-service'].url | default: pages['terms'].url -%}
+            {%- if terms_url == blank -%}{%- assign terms_url = root | append: '/policies/terms-of-service' -%}{%- endif -%}
+
+            {%- assign refund_url = shop.refund_policy.url | default: pages['refund-and-return-policy'].url | default: pages['refund-policy'].url | default: pages['refund-return-policy'].url | default: pages['returns'].url -%}
+            {%- if refund_url == blank -%}{%- assign refund_url = root | append: '/policies/refund-policy' -%}{%- endif -%}
+
+            {%- assign shipping_url = shop.shipping_policy.url | default: pages['shipping-and-delivery-policy'].url | default: pages['shipping-policy'].url | default: pages['shipping-delivery-policy'].url | default: pages['shipping'].url -%}
+            {%- if shipping_url == blank -%}{%- assign shipping_url = root | append: '/policies/shipping-policy' -%}{%- endif -%}
+
+            {%- assign privacy_url = shop.privacy_policy.url | default: pages['privacy-policy'].url | default: pages['privacy'].url -%}
+            {%- if privacy_url == blank -%}{%- assign privacy_url = root | append: '/policies/privacy-policy' -%}{%- endif -%}
+
+            {%- assign about_url = pages['about-us'].url | default: pages['about'].url -%}
+            {%- if about_url == blank -%}{%- assign about_url = root | append: '/pages/about-us' -%}{%- endif -%}
+
+            {%- assign track_url = pages['track-order'].url | default: pages['track'].url -%}
+            {%- if track_url == blank -%}{%- assign track_url = root | append: '/pages/track-order' -%}{%- endif -%}
+
             <li><a href="{{ routes.all_products_collection_url }}">Shop</a></li>
-            <li><a href="{{ routes.root_url }}pages/about-us">About Us</a></li>
-            <li><a href="{{ routes.root_url }}blogs/news">Blog</a></li>
-            <li><a href="{{ routes.root_url }}policies/privacy-policy">Privacy Policy</a></li>
-            <li><a href="{{ routes.root_url }}policies/terms-of-service">Terms &amp; Conditions</a></li>
-            <li><a href="{{ routes.root_url }}policies/refund-policy">Refund &amp; Return Policy</a></li>
-            <li><a href="{{ routes.root_url }}policies/shipping-policy">Shipping &amp; Delivery Policy</a></li>
-            <li><a href="{{ routes.root_url }}pages/track-order">Track Orders</a></li>
+            <li><a href="{{ about_url }}">About Us</a></li>
+            <li><a href="{{ blogs['news'].url | default: '/blogs/news' }}">Blog</a></li>
+            <li><a href="{{ privacy_url }}">Privacy Policy</a></li>
+            <li><a href="{{ terms_url }}">Terms &amp; Conditions</a></li>
+            <li><a href="{{ refund_url }}">Refund &amp; Return Policy</a></li>
+            <li><a href="{{ shipping_url }}">Shipping &amp; Delivery Policy</a></li>
+            <li><a href="{{ track_url }}">Track Orders</a></li>
           {%- endif -%}
         </ul>
       </div>
